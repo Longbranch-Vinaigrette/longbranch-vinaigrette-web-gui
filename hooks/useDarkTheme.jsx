@@ -7,15 +7,17 @@ export default function useDarkTheme() {
 	useEffect(() => {
 		// Get dark theme
 		const integer = localStorage.getItem(key);
-		const value = integer == "1" ? true : false;
+		const value = integer == "true" ? true : false;
 		setDarkTheme(value);
+		console.log(`Loaded value and set variable to: `, value);
 	}, []);
 
 	// Update local storage
 	useEffect(() => {
-		const value = darkTheme ? "1" : "0";
+		const value = darkTheme ? "true" : "false";
 		localStorage.setItem(key, value);
+		console.log(`Value changed, local storage set to: `, value);
 	}, [darkTheme]);
-	
-	return [darkTheme, setDarkTheme]
+
+	return [darkTheme, setDarkTheme];
 }
