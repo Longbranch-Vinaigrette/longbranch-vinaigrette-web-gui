@@ -1,0 +1,52 @@
+.navbar {
+	position: absolute;
+	display: flex;
+	
+	// Somehow it's affected by other components styles, so we have
+	// to move it back where it should be
+	left: 0px;
+	top: 0px;
+
+	.navbarCollapsed {
+		display: flex;
+		background-color: lightskyblue;
+		border-radius: 5px;
+		padding: 5px;
+	}
+
+	.main {
+		display: flex;
+		background-color: lightskyblue;
+		border-radius: 5px;
+		padding: 0px 15px 15px 15px;
+	}
+}
+
+.right {
+	// Right rotation
+	$rr: -45deg;
+	transform: rotate($rr);
+	-webkit-transform: rotate($rr);
+}
+
+.left {
+	// Left rotation
+	$lr: 135deg;
+	transform: rotate($lr);
+	-webkit-transform: rotate($lr);
+}
+
+.arrow {
+	border: solid black;
+	border-width: 0 4px 4px 0;
+	display: inline-block;
+	padding: 4px;
+}
+
+.right:hover {
+	cursor: pointer;
+}
+
+.left:hover {
+	cursor: pointer;
+}

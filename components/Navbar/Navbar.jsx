@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import useCollapseNavbar from "../hooks/useCollapseNavbar";
-import useDarkTheme from "../hooks/useDarkTheme";
+import useCollapseNavbar from "../../hooks/useCollapseNavbar";
+import useDarkTheme from "../../hooks/useDarkTheme";
 import styles from "./Navbar.module.scss";
 
 export default function Navbar() {
@@ -16,7 +16,7 @@ export default function Navbar() {
 		<div className={styles.navbar}>
 			{collapseNavbar ? (
 				<div className={styles.navbarCollapsed} onClick={switchCollapseNavbar}>
-					{/* When the navbar is collapsed */}
+					{/* Expand navbar */}
 					<div className={styles.right}>
 						<div className={styles.arrow}></div>
 					</div>
@@ -30,7 +30,7 @@ export default function Navbar() {
 						<div>Collapse navbar: {collapseNavbar ? "true" : "false"}</div>
 					</div>
 					<div>
-						{/* When the navbar is collapsed */}
+						{/* Collapse navbar */}
 						<div className={styles.left} onClick={switchCollapseNavbar}>
 							<div className={styles.arrow}></div>
 						</div>
