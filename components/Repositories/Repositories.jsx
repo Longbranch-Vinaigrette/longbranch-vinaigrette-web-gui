@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import useRepositorySettings from "../../hooks/useRepositorySettings";
 
 export default function Repositories() {
 	const [name, setName] = useState("Perseverancia-company");
 	const [toggle, setToggle] = useState(false);
+	const { repositorySettings } = useRepositorySettings();
 
 	return (
 		<div>
@@ -20,17 +22,10 @@ export default function Repositories() {
 					<tr>
 						<th>Repository name</th>
 						<th>Enabled</th>
+						<th>Configure</th>
 					</tr>
-					<tr>
-						<td>dev-gui</td>
-						<td>
-							<input
-								type="checkbox"
-								id={`repository/dev-gui/${name}`}
-								onClick={() => setToggle((prev) => !prev)}
-							/>
-						</td>
-					</tr>
+
+					{/* Create elements for every repository/app */}
 				</tbody>
 			</table>
 			{/* Toggle: {toggle ? "true" : "false"} */}
