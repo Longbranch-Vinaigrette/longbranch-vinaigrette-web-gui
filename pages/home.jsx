@@ -1,5 +1,7 @@
 import { useEffect } from "react";
+
 import styles from "../styles/home.module.scss";
+import Repositories from "../components/Repositories/Repositories";
 
 export default function Home() {
 	useEffect(() => {
@@ -11,6 +13,7 @@ export default function Home() {
 		<div>
 			<div className={styles.controlPanel}>
 				<h3>Control panel</h3>
+				<Repositories />
 			</div>
 		</div>
 	);

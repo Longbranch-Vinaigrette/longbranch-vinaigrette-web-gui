@@ -15,7 +15,10 @@ export default function Navbar() {
 	return (
 		<div className={styles.navbar}>
 			{collapseNavbar ? (
-				<div className={styles.navbarCollapsed} onClick={switchCollapseNavbar}>
+				<div
+					className={styles.navbarCollapsed}
+					onClick={() => switchCollapseNavbar()}
+				>
 					{/* Expand navbar */}
 					<div className={styles.right}>
 						<div className={styles.arrow}></div>
@@ -31,7 +34,7 @@ export default function Navbar() {
 					</div>
 					<div>
 						{/* Collapse navbar */}
-						<div className={styles.left} onClick={switchCollapseNavbar}>
+						<div className={styles.left} onClick={() => switchCollapseNavbar()}>
 							<div className={styles.arrow}></div>
 						</div>
 					</div>
