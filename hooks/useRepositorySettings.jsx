@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import fetchRepositories from "../lib/fetch/fetchRepositories";
+import fetchRepositories, {
+	fetchRepositoriesWithFetchAPI,
+} from "../lib/fetch/fetchRepositories";
 
 const repositoryData = fetchRepositories();
+const repositoryDataFromFetchAPI = fetchRepositoriesWithFetchAPI();
 
 export default function useRepositorySettings() {
 	const [repositories, setRepositories] = useState([]);

@@ -1,4 +1,7 @@
 export default {
+	// Wether the repository/app is considered deprecated or not
+	deprecated: false,
+	
 	// App manager name
 	"dev-gui": {
 		// Public app name
