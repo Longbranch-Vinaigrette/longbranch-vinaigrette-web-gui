@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 export default function Element({ name, setToggle }) {
 	return (
 		<tr>

@@ -3,7 +3,7 @@ export default {
 	deprecated: false,
 	
 	// App manager name
-	"dev-gui": {
+	"devtools": {
 		// Public app name
 		name: "Perseverancia Games",
 

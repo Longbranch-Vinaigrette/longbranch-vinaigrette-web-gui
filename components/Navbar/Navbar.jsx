@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useCollapseNavbar from "../../hooks/useCollapseNavbar";
 import useDarkTheme from "../../hooks/useDarkTheme";
 import styles from "./Navbar.module.scss";
@@ -6,6 +6,7 @@ import styles from "./Navbar.module.scss";
 export default function Navbar() {
 	const [darkTheme, setDarkTheme] = useDarkTheme();
 	const [collapseNavbar, setCollapseNavbar] = useCollapseNavbar();
+	const [hidden] = useState("hidden");
 
 	// Switch collapse navbar value
 	const switchCollapseNavbar = () => {
@@ -13,7 +14,10 @@ export default function Navbar() {
 	};
 
 	return (
-		<div className={styles.navbar}>
+		<div className={styles.navbar}
+			// Make it be hidden from the start, when the website loads change it if it's enabled
+			hidden={hidden}
+		>
 			{collapseNavbar ? (
 				<div
 					className={styles.navbarCollapsed}
