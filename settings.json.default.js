@@ -28,6 +28,9 @@ export default {
 			build: "next build",
 			// Command to start the app, optionally add default args like port in this case
 			start: "next start -p 38200",
+			// Command to stop the app
+			// It should be used if the AppManager class can't stop the app by itself
+			stop: "[Command to stop]"
 		},
 		// Arguments that the app can receive
 		arguments: [
