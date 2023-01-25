@@ -65,3 +65,15 @@ button:hover {
 	background-color: rgb(109, 189, 255);
 	cursor: pointer;
 }
+
+.danger {
+	background-color: rgb(253, 134, 134);
+	padding: 3px;
+	border-radius: 5px;
+}
+
+.success {
+	background-color: rgb(24, 252, 92);
+	padding: 3px;
+	border-radius: 5px;
+}

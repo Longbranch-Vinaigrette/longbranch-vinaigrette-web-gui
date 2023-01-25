@@ -94,8 +94,8 @@ export default function Element({ repository, keyName, setAppSettings }) {
 			</td>
 			<td>
 				{/* Only if disabled will it let you check */}
-				{(repository["dev_tools"] && "Yes ") || (
-					<div>
+				{(repository["dev_tools"] && <div className="success">Yes</div>) || (
+					<div className="danger">
 						No
 						<button
 							type="button"
