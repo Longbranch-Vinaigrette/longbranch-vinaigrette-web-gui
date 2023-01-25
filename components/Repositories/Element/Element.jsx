@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { useState } from "react";
+import Configuration from "./Configuration/Configuration";
 
-export default function Element({
-	repository,
-	keyName,
-	setAppSettings,
-}) {
+export default function Element({ repository, keyName, setAppSettings }) {
+	const [showConfiguration, setShowConfiguration] = useState(false);
+	
+	// Functions
 	const handleStartOnBootClick = async (event) => {
 		try {
 			// Update value
@@ -42,15 +42,13 @@ export default function Element({
 					return err;
 				});
 			console.log(`Response: `, result);
-		} catch (err) {
-			
-		}
+		} catch (err) {}
 	};
 
 	const handleConfigurationButtonClick = (event) => {
-		
+		setShowConfiguration((prev) => !prev);
 	};
-	
+
 	return (
 		<tr>
 			<td>{repository["user"]}</td>
@@ -59,21 +57,25 @@ export default function Element({
 				<input
 					type="checkbox"
 					checked={repository["start_on_boot"]}
-					onClick={(event) =>
-						handleStartOnBootClick(event)
-					}
+					onClick={(event) => handleStartOnBootClick(event)}
 				/>
 			</td>
 			<td>
 				<button
 					type="button"
-					onClick={(event) =>
-						handleConfigurationButtonClick(event)
-					}
+					onClick={(event) => handleConfigurationButtonClick(event)}
 				>
 					Configuration
 				</button>
 			</td>
+			{showConfiguration && (
+				<Configuration
+					repository={repository}
+					keyName={keyName}
+					setAppSettings={setAppSettings}
+					setShowConfiguration={setShowConfiguration}
+				/>
+			)}
 		</tr>
 	);
 }

@@ -1,0 +1,42 @@
+.coverEverything {
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	background: rgba($color: #000000, $alpha: 0.5);
+	position: absolute;
+
+	.whiteBox {
+		left: 10%;
+		top: 10%;
+		width: 80%;
+		height: 80%;
+		background: rgba(255, 255, 255, 0.95);
+		position: absolute;
+		border-radius: 10px;
+
+		.titleContainer {
+			// Center the elements
+			display: flex;
+			justify-content: center;
+
+			.title {
+				// Fix the position of the text
+				margin: 0px;
+			}
+		}
+	}
+	
+	// Button to close configuration
+	.closeButton {
+		padding: 6px 10px 6px 10px;
+		font-size: 18px;
+		position: absolute;
+		right: 0px;
+		background-color: rgb(255, 106, 106);
+	}
+	
+	.closeButton:hover {
+		background-color: rgb(255, 77, 77);
+	}
+}

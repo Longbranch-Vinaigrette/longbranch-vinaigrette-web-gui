@@ -31,10 +31,10 @@ table {
 	border: 1px solid black;
 	border-collapse: collapse;
 
-  tr {
-    background-color: rgb(255, 255, 255);
-  }
-  
+	tr {
+		background-color: rgb(255, 255, 255);
+	}
+
 	tr:nth-child(even) {
 		background-color: rgb(211, 211, 211);
 	}
@@ -48,4 +48,20 @@ table {
 		border: 1px solid black;
 		border-collapse: collapse;
 	}
+}
+
+button {
+	color: black;
+	background-color: rgb(134, 201, 255);
+	border-radius: 3px;
+	padding: 4px 6px 4px 6px;
+	margin: 3px;
+	font-size: 14px;
+	outline: none;
+	border: none;
+}
+
+button:hover {
+	background-color: rgb(109, 189, 255);
+	cursor: pointer;
 }
