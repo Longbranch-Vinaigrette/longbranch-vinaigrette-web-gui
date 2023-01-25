@@ -3,6 +3,7 @@ import Configuration from "./Configuration/Configuration";
 
 export default function Element({ repository, keyName, setAppSettings }) {
 	const [showConfiguration, setShowConfiguration] = useState(false);
+	const rowId = `repository/${repository["user"]}/${repository["name"]}`;
 
 	// Functions
 	const handleStartOnBootClick = async (event) => {
@@ -82,7 +83,7 @@ export default function Element({ repository, keyName, setAppSettings }) {
 	};
 
 	return (
-		<tr>
+		<tr id={rowId}>
 			<td>{repository["user"]}</td>
 			<td>{repository["name"]}</td>
 			<td>
