@@ -24,6 +24,7 @@ export default function Repositories() {
 						<th>Username</th>
 						<th>Repository name</th>
 						<th>Start on boot</th>
+						<th>DevTools</th>
 						<th>Configure</th>
 					</tr>
 
