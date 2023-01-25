@@ -30,7 +30,10 @@ export default {
 			start: "next start -p 38200",
 			// Command to stop the app
 			// It should be used if the AppManager class can't stop the app by itself
-			stop: "[Command to stop]"
+			stop: "[Command to stop]",
+			// Global start
+			// A start command that no matter where it's run, it will start the app
+			globalStart: "[CD somewhere and start]",
 		},
 		// Arguments that the app can receive
 		arguments: [
