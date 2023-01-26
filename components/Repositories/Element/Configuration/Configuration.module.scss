@@ -25,6 +25,11 @@
 				margin: 0px;
 			}
 		}
+		
+		.buttons {
+			display: flex;
+			justify-content: space-evenly;
+		}
 	}
 	
 	// Button to close configuration

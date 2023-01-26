@@ -10,10 +10,52 @@ export default function Configuration({
 	const rowId = `repository/${repository["user"]}/${repository["name"]}`;
 	const configId = `${rowId}/config`;
 
-	const handleStartAppClick = (event) => {};
-	const handleStopAppClick = (event) => {};
-	const handleRestartAppClick = (event) => {};
-	const handleSetupAppClick = (event) => {};
+	// Handle send command
+	const handleSendCommand = async (command) => {
+		const response = await fetch(
+			"http://localhost:37000/app/runCommand/",
+
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: new Blob(
+					[
+						JSON.stringify({
+							path: repository["path"],
+							commandName: command,
+						}),
+					],
+					{
+						type: "application/json",
+					}
+				),
+			}
+		)
+			.then((res) => {
+				console.log(`Response: `, res);
+				
+				return res.json();
+			})
+			.catch((err) => console.log(`Error: `, err));
+		console.log(`Start command response: `, response);
+		return response;
+	};
+	
+	// Specific commands
+	const handleStartAppClick = (event) => {
+		const res = handleSendCommand("start");
+	};
+	const handleStopAppClick = (event) => {
+		const res = handleSendCommand("stop");
+	};
+	const handleRestartAppClick = (event) => {
+		const res = handleSendCommand("restart");
+	};
+	const handleSetupAppClick = (event) => {
+		const res = handleSendCommand("setup");
+	};
 
 	const getVerticalPosition = () => {
 		if (scrollY) {
