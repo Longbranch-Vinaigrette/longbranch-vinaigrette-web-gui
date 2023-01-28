@@ -1,3 +1,29 @@
-.title {
+.margin {
 	margin: 0px 0px 0px 40px;
+
+	.fullForm {
+		border-radius: 5px;
+		border-color: black;
+		border-style: solid;
+		border-width: 1px;
+		padding: 10px;
+		width: 50%;
+		
+		.form {
+			display: table;
+			// justify-content: flex-start;
+			width: 100%;
+			margin: 0px 0px 20px 0px;
+
+			.labels {
+				display: table-cell;
+				vertical-align: middle;
+			}
+
+			.inputs {
+				display: table-cell;
+				vertical-align: middle;
+			}
+		}
+	}
 }
