@@ -1,0 +1,12 @@
+.nav {
+	display: flex;
+	justify-content: space-evenly;
+
+	.navbarElement {
+		margin: 10px 0px 0px 0px;
+	}
+	
+	.navbarElement:hover {
+		cursor: pointer;
+	}
+}
