@@ -25,13 +25,23 @@
 				margin: 0px;
 			}
 		}
-		
+
 		.buttons {
 			display: flex;
 			justify-content: space-evenly;
 		}
+
+		.information {
+			display: flex;
+			justify-content: start;
+			margin: 5px;
+			
+			.appStatus {
+				font-size: 15px;
+			}
+		}
 	}
-	
+
 	// Button to close configuration
 	.closeButton {
 		padding: 6px 10px 6px 10px;
@@ -40,7 +50,7 @@
 		right: 0px;
 		background-color: rgb(255, 106, 106);
 	}
-	
+
 	.closeButton:hover {
 		background-color: rgb(255, 77, 77);
 	}

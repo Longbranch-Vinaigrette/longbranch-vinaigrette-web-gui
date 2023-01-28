@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Configuration.module.scss";
 
 export default function Configuration({
@@ -7,42 +7,40 @@ export default function Configuration({
 	setAppSettings,
 	setShowConfiguration,
 }) {
+	const [appRunning, setAppRunning] = useState(false);
+
 	const rowId = `repository/${repository["user"]}/${repository["name"]}`;
 	const configId = `${rowId}/config`;
 
 	// Handle send command
 	const handleSendCommand = async (command) => {
-		const response = await fetch(
-			"http://localhost:37000/app/runCommand/",
-
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: new Blob(
-					[
-						JSON.stringify({
-							path: repository["path"],
-							commandName: command,
-						}),
-					],
-					{
-						type: "application/json",
-					}
-				),
-			}
-		)
+		const response = await fetch("http://localhost:37000/app/runCommand/", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: new Blob(
+				[
+					JSON.stringify({
+						path: repository["path"],
+						commandName: command,
+					}),
+				],
+				{
+					type: "application/json",
+				}
+			),
+		})
 			.then((res) => {
 				console.log(`Response: `, res);
-				
+
 				return res.json();
 			})
 			.catch((err) => console.log(`Error: `, err));
 		console.log(`Start command response: `, response);
 		return response;
 	};
-	
+
 	// Specific commands
 	const handleStartAppClick = (event) => {
 		const res = handleSendCommand("start");
@@ -94,9 +92,12 @@ export default function Configuration({
 	return (
 		<div className={styles.coverEverything} id={configId}>
 			<div className={styles.whiteBox}>
+				{/* Repository name */}
 				<div className={styles.titleContainer}>
 					<h4 className={styles.title}>{repository["name"]}</h4>
 				</div>
+
+				{/* Operations */}
 				<div className={styles.buttons}>
 					<button onClick={(event) => handleStartAppClick(event)}>
 						Start app
@@ -111,8 +112,22 @@ export default function Configuration({
 						Setup app
 					</button>
 				</div>
+
+				{/* Information */}
+				<div className={styles.information}>
+					<div className={styles.column1}>
+						{/* App status */}
+						<div className={styles.appStatus}>
+							{(appRunning && <div className="success">App running</div>) || (
+								<div className="danger">App not running</div>
+							)}
+						</div>
+					</div>
+					<div className={styles.column2}></div>
+				</div>
 			</div>
 
+			{/* Close the window */}
 			<button
 				className={styles.closeButton}
 				onClick={() => setShowConfiguration((prev) => !prev)}
