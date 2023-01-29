@@ -6,12 +6,28 @@ export default function useFancyUserRepositorySettings() {
 	const [userRepositories, setUserRepositories] = useState({});
 
 	const serverUrl = "http://localhost:37000";
+	const selectedUserKeyword = "fancyUserRepositorySettings/selectedUser";
+
+	// Load selected user locally
+	useEffect(() => {
+		const loadedSelectedUser = localStorage.getItem(selectedUserKeyword);
+		const isEmpty = !loadedSelectedUser;
+
+		if (!isEmpty) {
+			setSelectedUser(loadedSelectedUser);
+		}
+	}, []);
+
+	// Save selected user locally
+	useEffect(() => {
+		localStorage.setItem(selectedUserKeyword, selectedUser);
+	}, [selectedUser]);
 
 	// Update a repository
 	const updateRepository = (user, repositoryName, data) => {
-		console.log(`User: `, user);
-		console.log(`Repository name: `, repositoryName);
-		console.log(`Updating repository with the values: `, data);
+		// console.log(`User: `, user);
+		// console.log(`Repository name: `, repositoryName);
+		// console.log(`Updating repository with the values: `, data);
 		setUserRepositories((prev) => {
 			const result = prev[user].map((refRepository, index) => {
 				// This is the one we are looking for
@@ -52,7 +68,12 @@ export default function useFancyUserRepositorySettings() {
 
 			if (res) {
 				setUsers(res["users"]);
-				setSelectedUser(res["users"][0]);
+				
+				// An alias for me to understand
+				const isUserEmpty = !selectedUser;
+				if (!isUserEmpty) {
+					setSelectedUser(res["users"][0]);
+				}
 			}
 		})();
 	}, []);

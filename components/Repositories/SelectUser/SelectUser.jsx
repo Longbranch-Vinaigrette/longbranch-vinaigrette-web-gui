@@ -8,7 +8,7 @@ export default function SelectUser({ args, ...allArgs }) {
 	} = args;
 
 	return (
-		<div>
+		<div style={{margin: "0px 0px 0px 25px"}}>
 			<div>
 				<h4>Selected user {selectedUser}</h4>
 			</div>

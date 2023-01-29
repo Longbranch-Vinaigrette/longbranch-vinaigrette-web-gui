@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 
+/**
+ * @deprecated
+ * @returns 
+ */
 export default function useRepositorySettings() {
 	const [repositorySettings, setRepositorySettings] = useState([]);
 	const [url, setUrl] = useState("http://localhost:37000");
