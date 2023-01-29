@@ -80,16 +80,19 @@ export default function Element({
 		)
 			.then((res) => {
 				const data = res.json();
-				updateRepository(repository["user"], repository["name"], {
-					dev_tools: data["devToolsCompatible"]
-				})
 				return data;
 			})
 			.catch((err) => {
 				console.log(err);
 				return err;
 			});
+			
+		// Update repository
 		console.log(`Check DevTools compatibility response: `, result);
+		console.log(`Data: `, result["devtoolsCompatible"]);
+		updateRepository(repository["user"], repository["name"], {
+			dev_tools: result["devtoolsCompatible"],
+		});
 	};
 
 	return (

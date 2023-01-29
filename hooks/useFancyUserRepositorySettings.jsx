@@ -9,26 +9,33 @@ export default function useFancyUserRepositorySettings() {
 
 	// Update a repository
 	const updateRepository = (user, repositoryName, data) => {
+		console.log(`User: `, user);
+		console.log(`Repository name: `, repositoryName);
+		console.log(`Updating repository with the values: `, data);
 		setUserRepositories((prev) => {
-			return {
+			const result = prev[user].map((refRepository, index) => {
+				// This is the one we are looking for
+				if (refRepository["name"] == repositoryName) {
+					// Clone it
+					let repository = structuredClone(refRepository);
+
+					// Replace repository data with the new data
+					repository = {
+						...repository,
+						...data,
+					};
+					return repository;
+				}
+				return refRepository;
+			});
+
+			const preview = {
 				// Insert previous data of other users
 				...prev,
-				
-				// ON the user
-				[user]: {
-					// Insert previous data of the user
-					...prev[user],
-					
-					// Update the repository
-					[repositoryName]: {
-						// Insert previous data of the repository
-						...prev[user][repositoryName],
-						
-						// Insert the new data
-						...data,
-					},
-				},
+				// Replace the user for result
+				[user]: result,
 			};
+			return preview;
 		});
 	};
 
@@ -83,5 +90,11 @@ export default function useFancyUserRepositorySettings() {
 		})();
 	}, [users]);
 
-	return { users, selectedUser, setSelectedUser, userRepositories, updateRepository };
+	return {
+		users,
+		selectedUser,
+		setSelectedUser,
+		userRepositories,
+		updateRepository,
+	};
 }
