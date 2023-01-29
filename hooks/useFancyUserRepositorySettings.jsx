@@ -44,7 +44,6 @@ export default function useFancyUserRepositorySettings() {
 				.catch((err) => console.log("Error: ", err));
 
 			if (res) {
-				console.log(`Users: `, res["users"]);
 				setUsers(res["users"]);
 				setSelectedUser(res["users"][0]);
 			}
@@ -74,14 +73,11 @@ export default function useFancyUserRepositorySettings() {
 				// Set user repositories
 				if (res) {
 					setUserRepositories((prev) => {
-						console.log(`Response: `, res);
 						return {
 							...prev,
 							[user]: res["apps"],
 						};
 					});
-				} else {
-					console.log("Response is empty, response: ", res);
 				}
 			});
 		})();

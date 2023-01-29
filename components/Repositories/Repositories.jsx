@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import useFancyUserRepositorySettings from "../../hooks/useFancyUserRepositorySettings";
 
 import Element from "./Element/Element";
+import SelectUser from "./SelectUser/SelectUser";
+import PopUpWindow from "../lib/PopUpWindow";
 
 export default function Repositories() {
+	const [showSelectUserWindow, setShowSelectUserWindow] = useState(false);
+
 	const fancyUserRepositorySettings = useFancyUserRepositorySettings();
 	const {
 		users,
@@ -25,17 +29,25 @@ export default function Repositories() {
 		);
 	};
 
-	useEffect(() => {
-		console.log(`User repositories: `, userRepositories);
-		console.log(`Selected user: `, selectedUser);
-		console.log(`Its user repositories: `, userRepositories[selectedUser]);
-	}, [userRepositories]);
-
 	return (
 		<div>
 			{/* User */}
 			<div>
 				<p>Showing repositories of {selectedUser}</p>
+				<button
+					style={{ margin: "0px 0px 19px 0px" }}
+					onClick={(e) => setShowSelectUserWindow((prev) => !prev)}
+				>
+					Select user
+				</button>
+				{showSelectUserWindow && (
+					<PopUpWindow
+						Component={SelectUser}
+						showPopUp={showSelectUserWindow}
+						setShowPopUp={setShowSelectUserWindow}
+						args={{ ...fancyUserRepositorySettings }}
+					/>
+				)}
 			</div>
 
 			{/* Reference/s:
