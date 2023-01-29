@@ -22,7 +22,6 @@ export default function Settings() {
 				return res.json();
 			})
 			.catch((err) => console.log(`Error: `, err));
-		console.log(`Response: `, response);
 		return response;
 	};
 
@@ -35,10 +34,6 @@ export default function Settings() {
 			};
 		});
 	};
-
-	useEffect(() => {
-		console.log(`User input: `, userInput);
-	}, [userInput]);
 
 	// Fetch previous data
 	useEffect(() => {
@@ -64,20 +59,20 @@ export default function Settings() {
 					return res.json();
 				})
 				.catch((err) => {
-					return err;
+					console.log(`Error: `, err);
 				});
-
-			console.log(`Response: `, response);
-
-			// Set the input to the response data
-			setUserInput((prev) => {
-				const resData = response["data"];
-				console.log(`Res data: `, resData);
-				return {
-					...prev,
-					...resData,
-				};
-			});
+			
+			// Resopnse might be empty if there was an error.
+			if (response) {
+				// Set the input to the response data
+				setUserInput((prev) => {
+					const resData = response["data"];
+					return {
+						...prev,
+						...resData,
+					};
+				});
+			}
 		})();
 	}, []);
 
