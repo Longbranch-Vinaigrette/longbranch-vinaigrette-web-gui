@@ -1,14 +1,22 @@
 import { useState } from "react";
 import Configuration from "./Configuration/Configuration";
 
-export default function Element({ repository, keyName, setAppSettings }) {
+export default function Element({
+	repository,
+	index,
+	...fancyUserRepositorySettings
+}) {
+	if (!repository) {
+		return;
+	}
 	const [showConfiguration, setShowConfiguration] = useState(false);
 	const rowId = `repository/${repository["user"]}/${repository["name"]}`;
+	const { updateRepository } = fancyUserRepositorySettings;
 
 	// Functions
 	const handleStartOnBootClick = async (event) => {
 		// Update value
-		setAppSettings(keyName, {
+		updateRepository(repository["user"], repository["name"], {
 			start_on_boot: !repository["start_on_boot"],
 		});
 
@@ -72,7 +80,9 @@ export default function Element({ repository, keyName, setAppSettings }) {
 		)
 			.then((res) => {
 				const data = res.json();
-				setAppSettings(keyName, { dev_tools: data["devtoolsCompatible"] });
+				updateRepository(repository["user"], repository["name"], {
+					dev_tools: data["devToolsCompatible"]
+				})
 				return data;
 			})
 			.catch((err) => {
@@ -117,10 +127,12 @@ export default function Element({ repository, keyName, setAppSettings }) {
 			</td>
 			{showConfiguration && (
 				<Configuration
+					// Stuff
 					repository={repository}
-					keyName={keyName}
-					setAppSettings={setAppSettings}
+					index={index}
 					setShowConfiguration={setShowConfiguration}
+					// Fancy user repository settings
+					{...fancyUserRepositorySettings}
 				/>
 			)}
 		</tr>

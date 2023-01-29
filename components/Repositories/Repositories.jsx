@@ -1,34 +1,41 @@
 import { useEffect, useState } from "react";
-import useRepositorySettings from "../../hooks/useRepositorySettings";
+import useFancyUserRepositorySettings from "../../hooks/useFancyUserRepositorySettings";
+
 import Element from "./Element/Element";
 
 export default function Repositories() {
-	const [users, setUsers] = useState([]);
-	const { repositorySettings, setRepositorySettings, setAppSettings } =
-		useRepositorySettings();
+	const fancyUserRepositorySettings = useFancyUserRepositorySettings();
+	const {
+		users,
+		selectedUser,
+		setSelectedUser,
+		userRepositories,
+		updateRepository,
+	} = fancyUserRepositorySettings;
+
+	const createElement = (repository, index) => {
+		return (
+			<Element
+				// Stuff
+				repository={repository}
+				index={index}
+				// Repository settings
+				{...fancyUserRepositorySettings}
+			/>
+		);
+	};
 
 	useEffect(() => {
-		(async () => {
-			const res = await fetch("http://localhost:37000/user/getLocalUsers/", {
-				method: "GET",
-			})
-				.then((res) => {
-					return res.json();
-				})
-				.catch((err) => console.log("Error: ", err));
-
-			if (res) {
-				console.log(`Users: `, res["users"]);
-				setUsers(res["users"]);
-			}
-		})();
-	}, []);
+		console.log(`User repositories: `, userRepositories);
+		console.log(`Selected user: `, selectedUser);
+		console.log(`Its user repositories: `, userRepositories[selectedUser]);
+	}, [userRepositories]);
 
 	return (
 		<div>
 			{/* User */}
 			<div>
-				<p>Showing repositories of {users && users[0]}</p>
+				<p>Showing repositories of {selectedUser}</p>
 			</div>
 
 			{/* Reference/s:
@@ -50,17 +57,11 @@ export default function Repositories() {
 					</tr>
 
 					{/* Create elements for every repository/app */}
-					{Object.keys(repositorySettings).map((keyName, index) => {
-						const item = repositorySettings[keyName];
-
-						return (
-							<Element
-								repository={item}
-								keyName={keyName}
-								setAppSettings={setAppSettings}
-							/>
-						);
-					})}
+					{userRepositories &&
+						userRepositories[selectedUser] &&
+						userRepositories[selectedUser].map((repository, index) => {
+							return createElement(repository, index);
+						})}
 				</tbody>
 			</table>
 		</div>

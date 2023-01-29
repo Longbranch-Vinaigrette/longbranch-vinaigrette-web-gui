@@ -1,16 +1,27 @@
 import { useEffect, useState } from "react";
+import useMoveElementOnScroll from "../../../../hooks/css/positioning/useMoveElementOnScroll";
 import styles from "./Configuration.module.scss";
 
 export default function Configuration({
 	repository,
-	keyName,
-	setAppSettings,
+	index,
 	setShowConfiguration,
+	...fancyUserRepositorySettings
 }) {
 	const [appRunning, setAppRunning] = useState(false);
 
 	const rowId = `repository/${repository["user"]}/${repository["name"]}`;
 	const configId = `${rowId}/config`;
+	const {
+		users,
+		selectedUser,
+		setSelectedUser,
+		userRepositories,
+		updateRepository,
+	} = fancyUserRepositorySettings;
+
+	// Move element along the user
+	useMoveElementOnScroll(configId);
 
 	// Handle send command
 	const handleSendCommand = async (command) => {
@@ -55,46 +66,12 @@ export default function Configuration({
 		const res = handleSendCommand("setup");
 	};
 
-	const getVerticalPosition = () => {
-		if (scrollY) {
-			// Usual
-			return scrollY;
-		} else if (document.documentElement.clientHeight) {
-			// IE
-			return document.documentElement.scrollTop;
-		} else if (document.body) {
-			// IE quirks
-			return document.body.scrollTop;
-		}
-	};
-
-	const moveConfigurationToUserPosition = () => {
-		// Get vertical position
-		const verticalPosition = getVerticalPosition();
-
-		// Move element
-		const element = document.getElementById(configId);
-		if (element) {
-			element.style.top = `${verticalPosition}px`;
-		}
-	};
-
-	// Move element as the user scrolls
-	window.onscroll = function (e) {
-		moveConfigurationToUserPosition();
-	};
-
-	useEffect(() => {
-		// On instantiation move to the user position
-		moveConfigurationToUserPosition();
-	});
-
 	return (
 		<div className={styles.coverEverything} id={configId}>
 			<div className={styles.whiteBox}>
 				{/* Repository name */}
 				<div className={styles.titleContainer}>
-					<h4 className={styles.title}>{repository["name"]}</h4>
+					<h4 className={styles.title}>{selectedUser} - {repository["name"]}</h4>
 				</div>
 
 				{/* Operations */}
