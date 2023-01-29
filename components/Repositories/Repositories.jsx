@@ -3,13 +3,34 @@ import useRepositorySettings from "../../hooks/useRepositorySettings";
 import Element from "./Element/Element";
 
 export default function Repositories() {
-	const [name, setName] = useState("Perseverancia-company");
+	const [users, setUsers] = useState([]);
 	const { repositorySettings, setRepositorySettings, setAppSettings } =
 		useRepositorySettings();
 
+	useEffect(() => {
+		(async () => {
+			const res = await fetch("http://localhost:37000/user/getLocalUsers/", {
+				method: "GET",
+			})
+				.then((res) => {
+					return res.json();
+				})
+				.catch((err) => console.log("Error: ", err));
+
+			if (res) {
+				console.log(`Users: `, res["users"]);
+				setUsers(res["users"]);
+			}
+		})();
+	}, []);
+
 	return (
 		<div>
-			<h4>Repositories of {name}</h4>
+			{/* User */}
+			<div>
+				<p>Showing repositories of {users && users[0]}</p>
+			</div>
+
 			{/* Reference/s:
 			https://www.w3schools.com/html/html_tables.asp
 			https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox
