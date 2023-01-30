@@ -9,7 +9,9 @@ export default function Configuration({
 	...fancyUserRepositorySettings
 }) {
 	const [appRunning, setAppRunning] = useState(false);
+	const [appSettings, setAppSettings] = useState({});
 
+	const backendUrl = "http://localhost:37000";
 	const rowId = `repository/${repository["user"]}/${repository["name"]}`;
 	const configId = `${rowId}/config`;
 	const {
@@ -25,7 +27,7 @@ export default function Configuration({
 
 	// Handle send command
 	const handleSendCommand = async (command) => {
-		const response = await fetch("http://localhost:37000/app/runCommand/", {
+		const response = await fetch(`${backendUrl}/app/runCommand/`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -48,7 +50,6 @@ export default function Configuration({
 				return res.json();
 			})
 			.catch((err) => console.log(`Error: `, err));
-		console.log(`Start command response: `, response);
 		return response;
 	};
 
@@ -66,12 +67,54 @@ export default function Configuration({
 		const res = handleSendCommand("setup");
 	};
 
+	// Fetch app settings
+	useEffect(() => {
+		(async () => {
+			const res = await fetch(`${backendUrl}/app/getSettings/`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: new Blob(
+					[
+						JSON.stringify({
+							path: repository["path"],
+						}),
+					],
+					{
+						type: "application/json",
+					}
+				),
+			})
+				.then((res) => {
+					return res.json();
+				})
+				.catch((err) => {
+					console.log(err);
+					return undefined;
+				});
+			console.log(`Response: `, res);
+
+			if (res) {
+				// Set the data
+				setAppSettings((prev) => {
+					return {
+						...prev,
+						...res,
+					};
+				});
+			}
+		})();
+	}, []);
+
 	return (
 		<div className={styles.coverEverything} id={configId}>
 			<div className={styles.whiteBox}>
 				{/* Repository name */}
 				<div className={styles.titleContainer}>
-					<h4 className={styles.title}>{selectedUser} - {repository["name"]}</h4>
+					<h4 className={styles.title}>
+						{selectedUser} | {repository["name"]}
+					</h4>
 				</div>
 
 				{/* Operations */}
@@ -96,7 +139,10 @@ export default function Configuration({
 						{/* App status */}
 						<div className={styles.appStatus}>
 							{(appRunning && <div className="success">App running</div>) || (
-								<div className="danger">App not running</div>
+								<div>
+									<span style={{ margin: "0px 10px 0px 0px" }}>Status</span>
+									<span className="danger">App not running</span>
+								</div>
 							)}
 						</div>
 					</div>
