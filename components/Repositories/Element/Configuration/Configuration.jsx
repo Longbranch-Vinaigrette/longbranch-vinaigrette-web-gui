@@ -10,6 +10,7 @@ export default function Configuration({
 }) {
 	const [appRunning, setAppRunning] = useState(false);
 	const [appSettings, setAppSettings] = useState({});
+	const [envVariablesConfig, setEnvVariablesConfig] = useState({});
 
 	const backendUrl = "http://localhost:37000";
 	const rowId = `repository/${repository["user"]}/${repository["name"]}`;
@@ -67,6 +68,43 @@ export default function Configuration({
 		const res = handleSendCommand("setup");
 	};
 
+	// Handle change command input
+	const handleChangeCommandInput = (e) => {
+		const { name, value } = e.target;
+		setEnvVariablesConfig((prev) => {
+			return {
+				...prev,
+				[name]: value,
+			};
+		});
+	};
+
+	// Handle submit env variables
+	const handleSubmitEnvVariables = (e) => {
+		// Prevent default
+		e.preventDefault();
+
+		// Send env variables
+		fetch(`${backendUrl}/app/dot_env/upsertEnvVariables/`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: new Blob([
+				JSON.stringify({
+					path: repository["path"],
+					env: envVariablesConfig,
+				}),
+			]),
+		})
+			.then((res) => {
+				return res.json();
+			})
+			.catch((err) => {
+				console.log(`Error: `, err);
+			});
+	};
+
 	// Fetch app settings
 	useEffect(() => {
 		(async () => {
@@ -109,12 +147,12 @@ export default function Configuration({
 
 	return (
 		<div className={styles.coverEverything} id={configId}>
-			<div className={styles.whiteBox}>
+			<div className={styles.whiteBox} style={{ padding: "5px" }}>
 				{/* Repository name */}
 				<div className={styles.titleContainer}>
-					<h4 className={styles.title}>
+					<h3 className={styles.title}>
 						{selectedUser} | {repository["name"]}
-					</h4>
+					</h3>
 				</div>
 
 				{/* Operations */}
@@ -134,6 +172,7 @@ export default function Configuration({
 				</div>
 
 				{/* Information */}
+				<h4 style={{ marginBottom: "0px", marginTop: "0px" }}>Information</h4>
 				<div className={styles.information}>
 					<div className={styles.column1}>
 						{/* App status */}
@@ -145,39 +184,80 @@ export default function Configuration({
 								</div>
 							)}
 						</div>
-
-						{/* Environment variables */}
-						<table style={{margin: "10px 0px 0px 0px"}}>
-							<tbody>
-								<tr>
-									<th>Formal name</th>
-									<th>Description</th>
-									<th>Input</th>
-								</tr>
-								{appSettings &&
-									appSettings["env"] &&
-									appSettings["env"]["variables"] &&
-									appSettings["env"]["variables"].map((envVar, index) => {
-										return (
-											<tr>
-												<td>{envVar["formalName"]}</td>
-												<td>
-													{envVar["descriptionList"] &&
-														envVar["descriptionList"].map((message, j) => {
-															return <div>{message}</div>;
-														})}
-												</td>
-												<td>
-													<textarea name="" id="" cols="30" rows="10"></textarea>
-												</td>
-											</tr>
-										);
-									})}
-							</tbody>
-						</table>
 					</div>
 					<div className={styles.column2}></div>
 				</div>
+
+				{/* Environment variables
+				It will only be shown if "appSettings" has the field "env" and "variables"
+				*/}
+				{appSettings &&
+					appSettings["env"] &&
+					appSettings["env"]["variables"] && (
+						<div>
+							<h4 style={{ marginBottom: "0px" }}>
+								Environment variables(.env)
+							</h4>
+							<form action="submit">
+								<table style={{ margin: "10px 0px 10px 0px" }}>
+									<tbody>
+										{/* Titles */}
+										<tr>
+											<th>Formal name</th>
+											<th>Description</th>
+											<th>Input</th>
+										</tr>
+
+										{/* Configuration */}
+										{appSettings["env"]["variables"].map((envVar) => {
+											return (
+												<tr>
+													{/* Name of the variables */}
+													<td>{envVar["formalName"]}</td>
+
+													{/* Variable description */}
+													<td>
+														<label htmlFor={envVar["varName"]}>
+															{envVar["descriptionList"] &&
+																envVar["descriptionList"].map((message) => {
+																	return <div>{message}</div>;
+																})}
+														</label>
+													</td>
+
+													{/* Set environment variable */}
+													<td>
+														<textarea
+															name={envVar["varName"]}
+															id=""
+															cols="30"
+															rows="10"
+															value={
+																(envVariablesConfig &&
+																	envVariablesConfig[envVar["varName"]]) ||
+																""
+															}
+															onChange={(e) => handleChangeCommandInput(e)}
+														></textarea>
+													</td>
+												</tr>
+											);
+										})}
+									</tbody>
+								</table>
+
+								{/* Submit */}
+								<button
+									style={{ margin: "0px" }}
+									onClick={(e) => handleSubmitEnvVariables(e)}
+									type="submit"
+								>
+									Submit
+								</button>
+							</form>
+						</div>
+					)}
+				{/* End env input form */}
 			</div>
 
 			{/* Close the window */}
