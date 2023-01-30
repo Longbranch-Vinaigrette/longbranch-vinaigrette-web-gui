@@ -93,14 +93,14 @@ export default function Configuration({
 					console.log(err);
 					return undefined;
 				});
-			console.log(`Response: `, res);
 
 			if (res) {
 				// Set the data
 				setAppSettings((prev) => {
 					return {
 						...prev,
-						...res,
+						// The stuff is in data
+						...res["data"],
 					};
 				});
 			}
@@ -145,6 +145,36 @@ export default function Configuration({
 								</div>
 							)}
 						</div>
+
+						{/* Environment variables */}
+						<table style={{margin: "10px 0px 0px 0px"}}>
+							<tbody>
+								<tr>
+									<th>Formal name</th>
+									<th>Description</th>
+									<th>Input</th>
+								</tr>
+								{appSettings &&
+									appSettings["env"] &&
+									appSettings["env"]["variables"] &&
+									appSettings["env"]["variables"].map((envVar, index) => {
+										return (
+											<tr>
+												<td>{envVar["formalName"]}</td>
+												<td>
+													{envVar["descriptionList"] &&
+														envVar["descriptionList"].map((message, j) => {
+															return <div>{message}</div>;
+														})}
+												</td>
+												<td>
+													<textarea name="" id="" cols="30" rows="10"></textarea>
+												</td>
+											</tr>
+										);
+									})}
+							</tbody>
+						</table>
 					</div>
 					<div className={styles.column2}></div>
 				</div>
