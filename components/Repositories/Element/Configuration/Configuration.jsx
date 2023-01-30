@@ -12,6 +12,7 @@ export default function Configuration({
 	const [appRunning, setAppRunning] = useState(false);
 	const [appSettings, setAppSettings] = useState({});
 	const [envVariablesConfig, setEnvVariablesConfig] = useState({});
+	const [selectedTab, setSelectedTab] = useState("information");
 
 	const backendUrl = "http://localhost:37000";
 	const rowId = `repository/${repository["user"]}/${repository["name"]}`;
@@ -135,31 +136,75 @@ export default function Configuration({
 					</button>
 				</div>
 
-				{/* Information */}
-				<h4 style={{ marginBottom: "0px", marginTop: "0px" }}>Information</h4>
-				<div className={styles.information}>
-					<div className={styles.column1}>
-						{/* App status */}
-						<div className={styles.appStatus}>
-							{(appRunning && <div className="success">App running</div>) || (
-								<div>
-									<span style={{ margin: "0px 10px 0px 0px" }}>Status</span>
-									<span className="danger">App not running</span>
+				{/* Tabs */}
+				<nav className={styles.tabs}>
+					<div
+						// How to use two classes(I didn't know before)
+						// className={`${styles.tabElement} ${styles.tabElementSelected}`}
+						className={
+							(selectedTab === "information" && styles.tabElementSelected) ||
+							styles.tabElement
+						}
+						onClick={() => setSelectedTab("information")}
+					>
+						Information
+					</div>
+
+					{/* Environment variables
+							It will only be shown if "appSettings" has the field "env" and "variables"
+							*/}
+					{appSettings &&
+						appSettings["env"] &&
+						appSettings["env"]["variables"] && (
+							<div
+								className={
+									(selectedTab === "dotenv" && styles.tabElementSelected) ||
+									styles.tabElement
+								}
+								onClick={() => setSelectedTab("dotenv")}
+							>
+								Environment variables
+							</div>
+						)}
+				</nav>
+
+				{/* Select tab */}
+				{(selectedTab === "information" && (
+					<div>
+						{/* Information */}
+						<div className={styles.information}>
+							<div className={styles.column1}>
+								{/* App status */}
+								<div className={styles.appStatus}>
+									{(appRunning && (
+										<div className="success">App running</div>
+									)) || (
+										<div>
+											<span style={{ margin: "0px 10px 0px 0px" }}>Status</span>
+											<span className="danger">App not running</span>
+										</div>
+									)}
 								</div>
-							)}
+							</div>
+							<div className={styles.column2}></div>
 						</div>
 					</div>
-					<div className={styles.column2}></div>
-				</div>
-
-				{/* Environment variables
-				It will only be shown if "appSettings" has the field "env" and "variables"
-				*/}
-				{appSettings &&
-					appSettings["env"] &&
-					appSettings["env"]["variables"] && (
-						<EnvVariables repository={repository} appSettings={appSettings} />
-					)}
+				)) ||
+					(selectedTab === "dotenv" && (
+						<div>
+							{/* Environment variables
+							It will only be shown if "appSettings" has the field "env" and "variables"
+							*/}
+							{appSettings &&
+								appSettings["env"] &&
+								appSettings["env"]["variables"] && (
+									<EnvVariables
+										repository={repository}
+										appSettings={appSettings}
+									/>
+								)}
+						</div>
+					))}
 				{/* End env input form */}
 			</div>
 
