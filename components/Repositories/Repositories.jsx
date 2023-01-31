@@ -7,6 +7,8 @@ import PopUpWindow from "../lib/PopUpWindow";
 
 export default function Repositories() {
 	const [showSelectUserWindow, setShowSelectUserWindow] = useState(false);
+	const [atLeastOneIsDevToolsCompatible, setAtLeastOneIsDevToolsCompatible] =
+		useState(false);
 
 	const fancyUserRepositorySettings = useFancyUserRepositorySettings();
 	const {
@@ -29,6 +31,28 @@ export default function Repositories() {
 		);
 	};
 
+	useEffect(() => {
+		// Validation
+		if (!userRepositories) {
+			return;
+		}
+
+		if (!userRepositories[selectedUser]) {
+			return;
+		}
+
+		// Check if at least one of the is devtools compatible
+		for (const repository of userRepositories[selectedUser]) {
+			console.log(`Repository: `, repository["name"]);
+			console.log(`Is devtools compatible?: `, repository["dev_tools"]);
+			if (repository["dev_tools"]) {
+				console.log(`This app is indeed devtools compatible.`);
+				setAtLeastOneIsDevToolsCompatible(true);
+				break;
+			}
+		}
+	}, [selectedUser]);
+
 	return (
 		<div>
 			{/* User */}
@@ -49,6 +73,35 @@ export default function Repositories() {
 					/>
 				)}
 			</div>
+			{atLeastOneIsDevToolsCompatible && (
+				<div>
+					<div style={{ margin: "0px 0px 5px 0px" }}>
+						DevTools compatible apps
+					</div>
+					<table>
+						<tbody>
+							<tr>
+								<th>Username</th>
+								<th>Repository name</th>
+								<th>Start on boot</th>
+								<th>DevTools</th>
+								<th>Configure</th>
+							</tr>
+
+							{/* Create elements for every repository/app */}
+							{userRepositories &&
+								userRepositories[selectedUser] &&
+								userRepositories[selectedUser].map((repository, index) => {
+									if (repository["dev_tools"]) {
+										return createElement(repository, index);
+									}
+								})}
+						</tbody>
+					</table>
+				</div>
+			)}
+
+			<div style={{ margin: "20px 0px 5px 0px" }}>Every repository</div>
 
 			{/* Reference/s:
 			https://www.w3schools.com/html/html_tables.asp
