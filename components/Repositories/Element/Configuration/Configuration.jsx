@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+
 import useMoveElementOnScroll from "../../../../hooks/css/positioning/useMoveElementOnScroll";
 import styles from "./Configuration.module.scss";
 import EnvVariables from "./EnvVariables/EnvVariables";
+import Operations from "./Operations/Operations";
 
 export default function Configuration({
 	repository,
@@ -27,48 +29,6 @@ export default function Configuration({
 
 	// Move element along the user
 	useMoveElementOnScroll(configId);
-
-	// Handle send command
-	const handleSendCommand = async (command) => {
-		const response = await fetch(`${backendUrl}/app/runCommand/`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: new Blob(
-				[
-					JSON.stringify({
-						path: repository["path"],
-						commandName: command,
-					}),
-				],
-				{
-					type: "application/json",
-				}
-			),
-		})
-			.then((res) => {
-				console.log(`Response: `, res);
-
-				return res.json();
-			})
-			.catch((err) => console.log(`Error: `, err));
-		return response;
-	};
-
-	// Specific commands
-	const handleStartAppClick = (event) => {
-		const res = handleSendCommand("start");
-	};
-	const handleStopAppClick = (event) => {
-		const res = handleSendCommand("stop");
-	};
-	const handleRestartAppClick = (event) => {
-		const res = handleSendCommand("restart");
-	};
-	const handleSetupAppClick = (event) => {
-		const res = handleSendCommand("setup");
-	};
 
 	// Fetch app settings
 	useEffect(() => {
@@ -120,24 +80,9 @@ export default function Configuration({
 					</h3>
 				</div>
 
-				{/* Operations */}
-				<div className={styles.buttons}>
-					<button onClick={(event) => handleStartAppClick(event)}>
-						Start app
-					</button>
-					<button onClick={(event) => handleStopAppClick(event)}>
-						Stop app
-					</button>
-					<button onClick={(event) => handleRestartAppClick(event)}>
-						Restart app
-					</button>
-					<button onClick={(event) => handleSetupAppClick(event)}>
-						Setup app
-					</button>
-				</div>
-
 				{/* Tabs */}
 				<nav className={styles.tabs}>
+					{/* Information tab */}
 					<div
 						// How to use two classes(I didn't know before)
 						// className={`${styles.tabElement} ${styles.tabElementSelected}`}
@@ -148,6 +93,17 @@ export default function Configuration({
 						onClick={() => setSelectedTab("information")}
 					>
 						Information
+					</div>
+
+					{/* Operations(start, stop, setup, restart) */}
+					<div
+						className={
+							(selectedTab === "operations" && styles.tabElementSelected) ||
+							styles.tabElement
+						}
+						onClick={() => setSelectedTab("operations")}
+					>
+						Opeartions
 					</div>
 
 					{/* Environment variables
@@ -203,6 +159,16 @@ export default function Configuration({
 										appSettings={appSettings}
 									/>
 								)}
+						</div>
+					)) ||
+					(selectedTab === "operations" && (
+						<div>
+							{/* Operations */}
+							<Operations
+								backendUrl={backendUrl}
+								repository={repository}
+								appSettings={appSettings}
+							/>
 						</div>
 					))}
 				{/* End env input form */}

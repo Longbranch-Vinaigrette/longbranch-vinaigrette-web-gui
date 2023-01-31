@@ -1,0 +1,23 @@
+{
+	"devtools": {
+		"name": "DevTools Website",
+		"release": false,
+		"repositoryName": "dev-tools-website",
+		"version": "v1.0.0",
+		"commands": {
+			"setup": "npm install",
+			"start": "next dev -p 37001"
+		},
+		"env": {
+			"fileName": ".env",
+			"dotenv5": false,
+			"variables": [
+				{
+					"formalName": "Server port",
+					"varName": "PORT",
+					"description": "Server port, defaults to 37000."
+				}
+			]
+		}
+	}
+}

@@ -64,7 +64,10 @@ export default function useFancyUserRepositorySettings() {
 				.then((res) => {
 					return res.json();
 				})
-				.catch((err) => console.log("Error: ", err));
+				.catch((err) => {
+					// Remember that netowork errors are usually a cors problem
+					console.log("Error: ", err)
+				});
 
 			if (res) {
 				setUsers(res["users"]);
