@@ -25,6 +25,7 @@ img {
 	display: block;
 }
 
+// Tables
 table {
 	border-radius: 5px;
 	border: 1px solid black;
@@ -49,6 +50,7 @@ table {
 	}
 }
 
+// Buttons
 button {
 	color: black;
 	background-color: rgb(134, 201, 255);
@@ -65,6 +67,12 @@ button:hover {
 	cursor: pointer;
 }
 
+button:disabled {
+	background-color: gray;
+	cursor: default;
+}
+
+// Events
 .danger {
 	background-color: rgb(253, 134, 134);
 	padding: 3px;

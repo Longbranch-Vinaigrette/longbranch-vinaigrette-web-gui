@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import styles from "./Operations.module.scss";
 
 export default function Operations({
@@ -6,6 +8,29 @@ export default function Operations({
 	appSettings,
 	...props
 }) {
+	// Check which commands does the app have
+	const [hasStart] = useState(
+		(appSettings &&
+			appSettings["commands"] &&
+			appSettings["commands"]["start"] &&
+			true) ||
+			false
+	);
+	const [hasStop] = useState(
+		(appSettings &&
+			appSettings["commands"] &&
+			appSettings["commands"]["stop"] &&
+			true) ||
+			false
+	);
+	const [hasSetup] = useState(
+		(appSettings &&
+			appSettings["commands"] &&
+			appSettings["commands"]["setup"] &&
+			true) ||
+			false
+	);
+
 	// Handle send command
 	const handleSendCommand = async (command) => {
 		const response = await fetch(`${backendUrl}/app/runCommand/`, {
@@ -50,18 +75,41 @@ export default function Operations({
 
 	return (
 		<div>
-			<h4 style={{margin: "5px"}}>Operations</h4>
+			<h4 style={{ margin: "5px" }}>Operations</h4>
 
 			{/* Operations */}
 			<div className={styles.buttons}>
-				<button onClick={(event) => handleStartAppClick(event)}>
+				{/* Start */}
+				<button
+					onClick={(event) => handleStartAppClick(event)}
+					disabled={!hasStart}
+				>
 					Start app
 				</button>
-				<button onClick={(event) => handleStopAppClick(event)}>Stop app</button>
-				<button onClick={(event) => handleRestartAppClick(event)}>
+
+				{/* Stop */}
+				<button
+					onClick={(event) => handleStopAppClick(event)}
+					// Normally applications can be found by the start command, therefore
+					// it's possible to stop the app with the start command.
+					disabled={!hasStop && !hasStart}
+				>
+					Stop app
+				</button>
+
+				{/* Restart */}
+				<button
+					onClick={(event) => handleRestartAppClick(event)}
+					disabled={!hasStart}
+				>
 					Restart app
 				</button>
-				<button onClick={(event) => handleSetupAppClick(event)}>
+
+				{/* Setup */}
+				<button
+					onClick={(event) => handleSetupAppClick(event)}
+					disabled={!hasSetup}
+				>
 					Setup app
 				</button>
 			</div>
