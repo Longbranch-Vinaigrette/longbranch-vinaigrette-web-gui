@@ -73,11 +73,46 @@ export default function Repositories() {
 					/>
 				)}
 			</div>
-			{atLeastOneIsDevToolsCompatible && (
-				<div>
-					<div style={{ margin: "0px 0px 5px 0px" }}>
-						DevTools compatible apps
-					</div>
+
+			{/* If there exists repositories of the selected user */}
+			{userRepositories && userRepositories[selectedUser] && (
+				<div style={{ margin: "0px" }}>
+					{/* Fast access to those who are devtools compatible */}
+					{atLeastOneIsDevToolsCompatible && (
+						<div>
+							<div style={{ margin: "0px 0px 5px 0px" }}>
+								DevTools compatible apps
+							</div>
+							<table>
+								<tbody>
+									<tr>
+										<th>Username</th>
+										<th>Repository name</th>
+										<th>Start on boot</th>
+										<th>DevTools</th>
+										<th>Configure</th>
+									</tr>
+
+									{/* Create elements for every repository/app */}
+									{userRepositories[selectedUser].map((repository, index) => {
+										if (repository["dev_tools"]) {
+											return createElement(repository, index);
+										}
+									})}
+								</tbody>
+							</table>
+						</div>
+					)}
+
+					{/* Reference/s:
+					https://www.w3schools.com/html/html_tables.asp
+					https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox
+					
+					If you don't use tbody with tables, it will crash the app and throw
+					'hydration failed' error.
+					This guy is truly the MVP of html tables xd
+					https://github.com/vercel/next.js/discussions/36754?ysclid=lcsdk9vmzz136486139*/}
+					<div style={{ margin: "20px 0px 5px 0px" }}>Every repository</div>
 					<table>
 						<tbody>
 							<tr>
@@ -89,46 +124,13 @@ export default function Repositories() {
 							</tr>
 
 							{/* Create elements for every repository/app */}
-							{userRepositories &&
-								userRepositories[selectedUser] &&
-								userRepositories[selectedUser].map((repository, index) => {
-									if (repository["dev_tools"]) {
-										return createElement(repository, index);
-									}
-								})}
+							{userRepositories[selectedUser].map((repository, index) => {
+								return createElement(repository, index);
+							})}
 						</tbody>
 					</table>
 				</div>
 			)}
-
-			<div style={{ margin: "20px 0px 5px 0px" }}>Every repository</div>
-
-			{/* Reference/s:
-			https://www.w3schools.com/html/html_tables.asp
-			https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox
-			
-			If you don't use tbody with tables, it will crash the app and throw
-			'hydration failed' error.
-			This guy is truly the MVP of html tables xd
-			https://github.com/vercel/next.js/discussions/36754?ysclid=lcsdk9vmzz136486139*/}
-			<table>
-				<tbody>
-					<tr>
-						<th>Username</th>
-						<th>Repository name</th>
-						<th>Start on boot</th>
-						<th>DevTools</th>
-						<th>Configure</th>
-					</tr>
-
-					{/* Create elements for every repository/app */}
-					{userRepositories &&
-						userRepositories[selectedUser] &&
-						userRepositories[selectedUser].map((repository, index) => {
-							return createElement(repository, index);
-						})}
-				</tbody>
-			</table>
 		</div>
 	);
 }
