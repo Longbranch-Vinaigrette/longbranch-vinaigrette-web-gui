@@ -86,7 +86,7 @@ export default function Element({
 				console.log(err);
 				return err;
 			});
-			
+
 		// Update repository
 		console.log(`Check DevTools compatibility response: `, result);
 		console.log(`Data: `, result["devtoolsCompatible"]);
@@ -108,7 +108,11 @@ export default function Element({
 			</td>
 			<td>
 				{/* Only if disabled will it let you check */}
-				{(repository["dev_tools"] && <div className="success">Yes</div>) || (
+				{(repository["dev_tools"] && (
+					<div className="success" style={{ padding: "7px" }}>
+						Yes
+					</div>
+				)) || (
 					<div className="danger">
 						No
 						<button

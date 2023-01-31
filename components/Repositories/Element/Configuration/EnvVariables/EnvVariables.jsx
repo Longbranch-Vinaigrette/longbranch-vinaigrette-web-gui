@@ -43,6 +43,35 @@ export default function EnvVariables({ repository, appSettings, ...args }) {
 		console.log(`Response: `, res);
 	};
 
+	// Fetch project dotenv data
+	useEffect(() => {
+		(async () => {
+			const res = await fetch(`${backendUrl}/app/dot_env/getDotEnvData/`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: new Blob([JSON.stringify({ path: repository["path"] })], {
+					type: "application/json",
+				}),
+			})
+				.then((res) => {
+					return res.json();
+				})
+				.catch((err) => console.log(err));
+
+			console.log(`Response: `, res);
+			if (res) {
+				setEnvVariablesConfig((prev) => {
+					return {
+						...prev,
+						...res["data"],
+					};
+				});
+			}
+		})();
+	}, []);
+
 	return (
 		<div>
 			<h4 style={{ marginBottom: "0px" }}>Environment variables(.env)</h4>
