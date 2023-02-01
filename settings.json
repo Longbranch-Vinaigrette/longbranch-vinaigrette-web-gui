@@ -6,7 +6,8 @@
 		"version": "v1.0.0",
 		"commands": {
 			"setup": "npm install",
-			"start": "next dev -p 37001"
+			"build": "npm run build",
+			"start": "npx next start -p 37001"
 		},
 		"env": {
 			"fileName": ".env",

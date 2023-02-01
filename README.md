@@ -19,9 +19,11 @@ Made by @FelixRiddle
 - [ ] \(Optional) Make it look nice :D
 - [ ] Apps
   - [ ] App
-    - [ ] Show app status.
+    - [X] Show app status.
     - [X] Make operations on the given app(like start, stop, etc.).
+      - [ ] Build and move.
     - [X] Edit .env variables.
+  - [ ] Roamer(To update data values).
 
 ### Setup[^setup]
 

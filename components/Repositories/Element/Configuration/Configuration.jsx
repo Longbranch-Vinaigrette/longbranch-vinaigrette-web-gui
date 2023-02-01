@@ -173,6 +173,8 @@ export default function Configuration({
 								backendUrl={backendUrl}
 								repository={repository}
 								appSettings={appSettings}
+								appStatus={appStatus}
+								updateStatus={appStatus}
 							/>
 						</div>
 					))}

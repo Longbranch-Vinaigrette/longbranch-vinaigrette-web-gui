@@ -6,6 +6,8 @@ export default function Operations({
 	backendUrl,
 	repository,
 	appSettings,
+	appStatus,
+	updateAppStatus,
 	...props
 }) {
 	// Check which commands does the app have
@@ -112,6 +114,17 @@ export default function Operations({
 				>
 					Setup app
 				</button>
+			</div>
+
+			{/* Information */}
+			<h4 style={{ margin: "5px" }}>Information</h4>
+			<div className={`${styles.information} `}>
+				<div className={`${styles.status}`}>
+					<p className={`${styles.text}`}>App status:</p>
+					{(appStatus && <div className="success">App running</div>) || (
+						<div className="danger">App not running</div>
+					)}
+				</div>
 			</div>
 		</div>
 	);
