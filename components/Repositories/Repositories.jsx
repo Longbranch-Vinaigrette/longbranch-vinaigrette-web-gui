@@ -31,6 +31,7 @@ export default function Repositories() {
 		);
 	};
 
+	// Check if at least one of the is devtools compatible
 	useEffect(() => {
 		// Validation
 		if (!userRepositories) {
@@ -43,10 +44,7 @@ export default function Repositories() {
 
 		// Check if at least one of the is devtools compatible
 		for (const repository of userRepositories[selectedUser]) {
-			console.log(`Repository: `, repository["name"]);
-			console.log(`Is devtools compatible?: `, repository["dev_tools"]);
 			if (repository["dev_tools"]) {
-				console.log(`This app is indeed devtools compatible.`);
 				setAtLeastOneIsDevToolsCompatible(true);
 				break;
 			}

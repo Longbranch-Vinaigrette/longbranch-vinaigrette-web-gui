@@ -13,10 +13,15 @@ Made by @FelixRiddle
 
 ###### TODO:
 
-- [ ] Make a functional website
-  - [ ] The website must be able to communicate with the backend server dev-gui
+- [X] Make a functional website
+  - [X] The website must be able to communicate with the backend server dev-gui
   <!-- Use \() to escape parethenses -->
 - [ ] \(Optional) Make it look nice :D
+- [ ] Apps
+  - [ ] App
+    - [ ] Show app status.
+    - [X] Make operations on the given app(like start, stop, etc.).
+    - [X] Edit .env variables.
 
 ### Setup[^setup]
 

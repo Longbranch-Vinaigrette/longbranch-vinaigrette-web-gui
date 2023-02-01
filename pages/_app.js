@@ -3,8 +3,23 @@ import "../styles/globals.scss";
 import TopNavbar from "../components/TopNavbar/TopNavbar";
 import Navbar from "../components/Navbar/Navbar";
 import Head from "next/head";
+import { useEffect } from "react";
 
 export default function App({ Component, pageProps }) {
+	useEffect(() => {
+		// Set globally available props
+		window.appInfo = {
+			servers: {
+				// DevTools backend server
+				devtoolsBackendServer: "http://127.0.0.1:37000",
+				// This very server
+				devtoolsFrontendServer: "http://127.0.0.1:37001",
+				// DevTools database server
+				devtoolsDatabaseServer: "http://127.0.0.1:37002",
+			},
+		};
+	}, []);
+
 	return (
 		<div>
 			<TopNavbar></TopNavbar>

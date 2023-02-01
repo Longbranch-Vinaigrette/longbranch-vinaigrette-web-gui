@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import useAppStatus from "../../../../hooks/apps/app/useAppStatus";
 
 import useMoveElementOnScroll from "../../../../hooks/css/positioning/useMoveElementOnScroll";
 import styles from "./Configuration.module.scss";
@@ -11,14 +12,17 @@ export default function Configuration({
 	setShowConfiguration,
 	...fancyUserRepositorySettings
 }) {
-	const [appRunning, setAppRunning] = useState(false);
 	const [appSettings, setAppSettings] = useState({});
 	const [envVariablesConfig, setEnvVariablesConfig] = useState({});
 	const [selectedTab, setSelectedTab] = useState("information");
 
 	const backendUrl = "http://localhost:37000";
 	const rowId = `repository/${repository["user"]}/${repository["name"]}`;
-	const configId = `${rowId}/config`;
+	// Hook to check app status
+	const { appStatus, updateAppStatus } = useAppStatus({
+		path: repository["path"],
+	});
+	// Hook to fetch repository settings
 	const {
 		users,
 		selectedUser,
@@ -28,6 +32,7 @@ export default function Configuration({
 	} = fancyUserRepositorySettings;
 
 	// Move element along the user
+	const configId = `${rowId}/config`;
 	useMoveElementOnScroll(configId);
 
 	// Fetch app settings
@@ -132,7 +137,7 @@ export default function Configuration({
 							<div className={styles.column1}>
 								{/* App status */}
 								<div className={styles.appStatus}>
-									{(appRunning && (
+									{(appStatus && (
 										<div className="success">App running</div>
 									)) || (
 										<div>
