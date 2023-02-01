@@ -29,12 +29,9 @@ export default function useAppStatus({ path, ...props }) {
 						console.log(err);
 					});
 
-				console.log(`Is app running?: `, res);
-
 				// If there is an actual response
 				if (res && !res["debug"]) {
 					const status = res["data"]["isAppRunning"];
-					console.log(`Status: `, status);
 					setAppStatus(status);
 				}
 			})();

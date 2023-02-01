@@ -1,4 +1,5 @@
 import { useState } from "react";
+import usePythonVersion from "../../../../../hooks/system/python/usePythonVersion";
 
 import styles from "./Operations.module.scss";
 
@@ -32,6 +33,14 @@ export default function Operations({
 			true) ||
 			false
 	);
+	// Get programming language
+	const [programmingLanguage] = useState(
+		(appSettings &&
+			appSettings["information"] &&
+			appSettings["information"]["language"]) ||
+			undefined
+	);
+	const { pythonVersion } = usePythonVersion();
 
 	// Handle send command
 	const handleSendCommand = async (command) => {
@@ -53,8 +62,6 @@ export default function Operations({
 			),
 		})
 			.then((res) => {
-				console.log(`Response: `, res);
-
 				return res.json();
 			})
 			.catch((err) => console.log(`Error: `, err));
@@ -124,6 +131,14 @@ export default function Operations({
 					{(appStatus && <div className="success">App running</div>) || (
 						<div className="danger">App not running</div>
 					)}
+				</div>
+				<div>
+					<p style={{ margin: "0px" }}>
+						Programming language: {programmingLanguage}
+					</p>
+				</div>
+				<div>
+					<p style={{ margin: "0px" }}>Its version: {pythonVersion}</p>
 				</div>
 			</div>
 		</div>
