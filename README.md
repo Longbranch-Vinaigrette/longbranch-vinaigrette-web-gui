@@ -18,10 +18,13 @@ Made by @FelixRiddle
   <!-- Use \() to escape parethenses -->
 - [ ] \(Optional) Make it look nice :D
 - [ ] Apps
+  - [ ] Setup and build apps that are DevTools compatible automatically.
+    - [ ] On start, check for app dependencies and install them.
+      - [ ] Python packages
+    - [ ] If they are running, automatically restart them.
   - [ ] App
     - [X] Show app status.
     - [X] Make operations on the given app(like start, stop, etc.).
-      - [ ] Build and move.
     - [X] Edit .env variables.
   - [ ] Roamer(To update data values).
 

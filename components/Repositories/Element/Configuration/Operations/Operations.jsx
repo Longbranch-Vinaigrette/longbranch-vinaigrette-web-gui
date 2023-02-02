@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "./Operations.module.scss";
 
 // Hooks
-import useInstalledPackages from "../../../../../hooks/system/python/useInstalledPackages";
-import usePythonVersion from "../../../../../hooks/system/python/usePythonVersion";
+import useDependenciesChecker from "../../../../../hooks/apps/app/useDependenciesChecker";
 
 export default function Operations({
 	backendUrl,
@@ -44,10 +43,7 @@ export default function Operations({
 			appSettings["information"]["language"]) ||
 			undefined
 	);
-	// Language version
-	const [languageVersion, setLanguageVersion] = useState();
-	// Installed packages
-	const [packages, setPackages] = useState();
+	useDependenciesChecker({ appSettings });
 
 	// Handle send command
 	const handleSendCommand = async (command) => {
