@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+// Styles
 import styles from "./Operations.module.scss";
+
+// Hooks
+import useInstalledPackages from "../../../../../hooks/system/python/useInstalledPackages";
+import usePythonVersion from "../../../../../hooks/system/python/usePythonVersion";
 
 export default function Operations({
 	backendUrl,
@@ -39,6 +44,10 @@ export default function Operations({
 			appSettings["information"]["language"]) ||
 			undefined
 	);
+	// Language version
+	const [languageVersion, setLanguageVersion] = useState();
+	// Installed packages
+	const [packages, setPackages] = useState();
 
 	// Handle send command
 	const handleSendCommand = async (command) => {
@@ -95,11 +104,7 @@ export default function Operations({
 				</button>
 
 				{/* Stop */}
-				<button
-					onClick={(event) => handleStopAppClick(event)}
-				>
-					Stop app
-				</button>
+				<button onClick={(event) => handleStopAppClick(event)}>Stop app</button>
 
 				{/* Restart */}
 				<button

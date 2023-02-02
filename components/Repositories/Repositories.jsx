@@ -24,7 +24,7 @@ export default function Repositories() {
 		updateRepository,
 	} = fancyUserRepositorySettings;
 	// Get python version and installed packages
-	const { pythonVersion } = usePythonVersion(); 
+	const { pythonVersion } = usePythonVersion();
 	const { installedPackages } = useInstalledPackages();
 
 	const createElement = (repository, index) => {
