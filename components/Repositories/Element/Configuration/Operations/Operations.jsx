@@ -99,9 +99,6 @@ export default function Operations({
 				{/* Stop */}
 				<button
 					onClick={(event) => handleStopAppClick(event)}
-					// Normally applications can be found by the start command, therefore
-					// it's possible to stop the app with the start command.
-					disabled={!hasStop && !hasStart}
 				>
 					Stop app
 				</button>
