@@ -1,5 +1,4 @@
 import { useState } from "react";
-import usePythonVersion from "../../../../../hooks/system/python/usePythonVersion";
 
 import styles from "./Operations.module.scss";
 
@@ -40,7 +39,6 @@ export default function Operations({
 			appSettings["information"]["language"]) ||
 			undefined
 	);
-	const { pythonVersion } = usePythonVersion();
 
 	// Handle send command
 	const handleSendCommand = async (command) => {
@@ -133,9 +131,6 @@ export default function Operations({
 					<p style={{ margin: "0px" }}>
 						Programming language: {programmingLanguage}
 					</p>
-				</div>
-				<div>
-					<p style={{ margin: "0px" }}>Its version: {pythonVersion}</p>
 				</div>
 			</div>
 		</div>

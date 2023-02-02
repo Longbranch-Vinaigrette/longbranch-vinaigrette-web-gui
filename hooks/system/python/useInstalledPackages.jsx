@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
-export default function usePythonVersion() {
-	const [pythonVersion, setPythonVersion] = useState("");
+export default function useInstalledPackages() {
+	const [installedPackages, setInstalledPackages] = useState([]);
 	const [backendServer, setBackendServer] = useState("");
 
 	// Update python version
-	const updatePythonVersion = async () => {
+	const updateInstalledPackages = async () => {
 		const res = await fetch(
-			`${backendServer}/system/python/getPythonVersion/`,
+			`${backendServer}/system/python/getInstalledPackages/`,
 			{
 				method: "GET",
 			}
@@ -21,8 +21,8 @@ export default function usePythonVersion() {
 
 		// If data exists, set it
 		if (res && !res["debug"]) {
-			const pythonVersionArray = res["data"]["version"];
-			setPythonVersion(pythonVersionArray.join("."));
+			const installedPackages = res["data"]["packages"];
+			setInstalledPackages(installedPackages);
 		}
 	};
 
@@ -36,11 +36,11 @@ export default function usePythonVersion() {
 		// Check if the backend server url has been retrieved
 		if (!backendServer) return;
 
-		updatePythonVersion();
+		updateInstalledPackages();
 	}, [backendServer]);
 
 	return {
-		pythonVersion,
-		updatePythonVersion,
+		installedPackages,
+		updateInstalledPackages,
 	};
 }

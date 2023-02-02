@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
-import useFancyUserRepositorySettings from "../../hooks/useFancyUserRepositorySettings";
 
+// Components
 import Element from "./Element/Element";
 import SelectUser from "./SelectUser/SelectUser";
 import PopUpWindow from "../lib/PopUpWindow";
+
+// Hooks
+import usePythonVersion from "../../hooks/system/python/usePythonVersion";
+import useFancyUserRepositorySettings from "../../hooks/useFancyUserRepositorySettings";
+import useInstalledPackages from "../../hooks/system/python/useInstalledPackages";
 
 export default function Repositories() {
 	const [showSelectUserWindow, setShowSelectUserWindow] = useState(false);
@@ -18,6 +23,9 @@ export default function Repositories() {
 		userRepositories,
 		updateRepository,
 	} = fancyUserRepositorySettings;
+	// Get python version and installed packages
+	const { pythonVersion } = usePythonVersion(); 
+	const { installedPackages } = useInstalledPackages();
 
 	const createElement = (repository, index) => {
 		return (
