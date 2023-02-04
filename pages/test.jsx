@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import PythonArbitrary from "../lib/pythonArbitrary";
+import PythonArbitrary from "../lib/PythonArbitrary";
 
 export default function Test() {
 	const [backendUrl, setBackendUrl] = useState("");
 
 	useEffect(() => {
-		console.log(`Backend url: `, backendUrl);
 		// If there's no backend url return
 		if (!backendUrl) {
 			return;

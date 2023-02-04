@@ -1,4 +1,4 @@
-from src.submodules.local_repository_manager import LocalRepositoryManager
+from src.submodules.dev_tools_utils.local_repository_manager import LocalRepositoryManager
 
 # Here I will enable camel case because I'm tired of not
 # being able to xd
