@@ -9,21 +9,14 @@ export default function Test() {
 			return;
 		}
 
-		(async () => {})();
+		console.log(`Backend url: `, backendUrl);
 	}, [backendUrl]);
 
 	useEffect(() => {
-		console.log(`Comprehensive storage: `, comprehensiveStorage);
-
-		// Set backend url
-		if (
-			window &&
-			window.appInfo &&
-			window.appInfo["servers"] &&
-			window.appInfo["servers"]["devtoolsBackendServer"]
-		) {
-			const backendUrl = window.appInfo["servers"]["devtoolsBackendServer"];
-			setBackendUrl(backendUrl);
+		console.log(`Unit: `, comprehensiveStorage.getUnit("servers"));
+		const servers = comprehensiveStorage.get("servers");
+		if (servers && servers["devtoolsBackendServer"]) {
+			setBackendUrl(servers["devtoolsBackendServer"]);
 		}
 	}, []);
 
