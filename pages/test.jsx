@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import PythonArbitrary from "../lib/PythonArbitrary";
 
 export default function Test() {
 	const [backendUrl, setBackendUrl] = useState("");
@@ -11,9 +10,6 @@ export default function Test() {
 		}
 
 		(async () => {
-			const arbitrary = new PythonArbitrary(backendUrl);
-			const res = await arbitrary.dispatch("/repositories/usersList.py");
-			console.log(`Response: `, res);
 		})();
 	}, [backendUrl]);
 
