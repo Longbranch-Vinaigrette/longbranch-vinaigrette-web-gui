@@ -9,12 +9,13 @@ export default function Test() {
 			return;
 		}
 
-		(async () => {
-		})();
+		(async () => {})();
 	}, [backendUrl]);
 
-	// Set the backend url
 	useEffect(() => {
+		console.log(`Comprehensive storage: `, comprehensiveStorage);
+
+		// Set backend url
 		if (
 			window &&
 			window.appInfo &&
