@@ -8,8 +8,8 @@ import ComprehensiveStorage from "../lib/data/ComprehensiveStorage";
 
 // Instantiate and set comprehensive storage as a global variable
 const comprehensiveStorage = new ComprehensiveStorage("http://127.0.0.1:37000");
-globalThis.comprehensiveStorage = comprehensiveStorage;
-comprehensiveStorage.createStaticUnit("servers", {
+globalThis.CS = comprehensiveStorage;
+CS.createStaticUnit("servers", {
 	// DevTools backend server
 	devtoolsBackendServer: "http://127.0.0.1:37000",
 	// This very server

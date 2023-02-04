@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
 
+import useUsersList from "../hooks/data/repositories/useUsersList";
+import useBackendUrl from "../hooks/data/useBackendUrl";
+
 export default function Test() {
-	const [backendUrl, setBackendUrl] = useState("");
+	const [backendUrl] = useBackendUrl();
+	const { usersList, setUsersList } = useUsersList();
 
 	useEffect(() => {
-		// If there's no backend url return
-		if (!backendUrl) {
-			return;
+		if (backendUrl) {
+			console.log(`Backend url: ${backendUrl}`);
 		}
-
-		console.log(`Backend url: `, backendUrl);
 	}, [backendUrl]);
 
+	// Users list
 	useEffect(() => {
-		console.log(`Unit: `, comprehensiveStorage.getUnit("servers"));
-		const servers = comprehensiveStorage.get("servers");
-		if (servers && servers["devtoolsBackendServer"]) {
-			setBackendUrl(servers["devtoolsBackendServer"]);
+		if (usersList) {
+			console.log(`Users list: `, usersList);
 		}
-	}, []);
+	}, [usersList]);
 
 	return <div>Test</div>;
 }
