@@ -6,7 +6,7 @@ import Head from "next/head";
 import { useEffect } from "react";
 
 // Comprehensive storage and arbitrers
-import ComprehensiveStorage from "../lib/data/ComprehensiveStorage";
+import ComprehensiveStorage from "../lib/data/ComprehensiveStorage/ComprehensiveStorage";
 import PythonArbiter from "../lib/data/PythonArbiter";
 
 // Add Comprehensive Storage to the global scope
