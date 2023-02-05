@@ -13,8 +13,10 @@ import PythonArbiter from "../lib/data/PythonArbiter";
 globalThis.CS = new ComprehensiveStorage(
 	new PythonArbiter("http://127.0.0.1:37000"),
 	{
-		allowCollisions: false,
-		dontCreateUnitOnCollision: true,
+		collisionOptions: {
+			allowCollisions: false,
+			dontCreateUnitOnCollision: true,
+		},
 	}
 );
 
