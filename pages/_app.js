@@ -5,20 +5,6 @@ import Navbar from "../components/Navbar/Navbar";
 import Head from "next/head";
 import { useEffect } from "react";
 
-// import ComprehensiveStorage from "../lib/data/ComprehensiveStorage";
-//
-// // Instantiate and set comprehensive storage as a global variable
-// const comprehensiveStorage = new ComprehensiveStorage("http://127.0.0.1:37000");
-// globalThis.CS = comprehensiveStorage;
-// CS.createStaticUnit("servers", {
-// 	// DevTools backend server
-// 	devtoolsBackendServer: "http://127.0.0.1:37000",
-// 	// This very server
-// 	devtoolsFrontendServer: "http://127.0.0.1:37001",
-// 	// DevTools database server
-// 	devtoolsDatabaseServer: "http://127.0.0.1:37002",
-// });
-
 // Comprehensive storage and arbitrers
 import ComprehensiveStorage from "../lib/data/storage/comprehensiveStorage/ComprehensiveStorage";
 import PythonArbiter from "../lib/data/PythonArbiter";
