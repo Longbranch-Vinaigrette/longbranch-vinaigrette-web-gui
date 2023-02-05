@@ -4,9 +4,9 @@ export default function Test() {
 	const [backendServer, setBackendServer] = useState();
 
 	useEffect(() => {
-		setBackendServer((prev) =>
-			CS.find.unit("servers", ["devtoolsBackendServer"])
-		);
+		const data = CS.find.unit("servers", ["devtoolsBackendServer"]);
+		console.log(`Data: `, data);
+		setBackendServer((prev) => data);
 	}, []);
 
 	return <div>Test</div>;
