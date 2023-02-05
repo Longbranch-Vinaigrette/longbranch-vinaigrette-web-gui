@@ -5,7 +5,10 @@ import useArbiter from "../hooks/data/useArbiter";
 
 export default function Test() {
 	const [backendServer, setBackendServer] = useDevtoolsBackendUrl();
-	const [usersList, setUsersList] = useArbiter("/repositories/usersList");
+	const [usersList, updateUsersList] = useArbiter(
+		"/repositories/usersList"
+	);
+	const [updated, setUpdated] = useState(false);
 
 	useEffect(() => {
 		if (backendServer) console.log(`Backend server url: `, backendServer);

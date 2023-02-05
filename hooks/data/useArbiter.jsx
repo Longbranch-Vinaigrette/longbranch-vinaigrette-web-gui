@@ -9,24 +9,29 @@ import { useEffect, useState } from "react";
  * @param {*} route
  * @returns
  */
-export default function useArbiter(route) {
+export default function useArbiter(route, alias = undefined) {
 	const [value, setValue] = useState();
 
 	useEffect(() => {
 		(async () => {
 			// Check if the unit exists, if it doesn't create it.
 			// If the left one is null, it will return the second one
-			console.log(`Given route: `, route);
-			CS.getUnit(route) ?? (await CS.createAndAppendArbiterUnit(route));
+			CS.getUnit(route) ?? (await CS.createAndAppendArbiterUnit(route, alias));
 
 			// Update data
 			await CS.getUnit(route).updateData();
-			console.log(`Updated ${route} data.`);
 
 			// Set the unit
-			setValue((prev) => CS.getUnit(route));
+			setValue((prev) => CS.getUnit(route).data);
 		})();
 	}, []);
 
-	return [value, setValue];
+	/**Update unit data
+	 *
+	 */
+	const updateData = async () => {
+		await CS.getUnit(route).updateData();
+	};
+
+	return [value, updateData];
 }
