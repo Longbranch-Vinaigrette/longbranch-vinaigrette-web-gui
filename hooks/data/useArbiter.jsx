@@ -19,11 +19,12 @@ export default function useArbiter(route) {
 			console.log(`Given route: `, route);
 			CS.getUnit(route) ?? (await CS.createAndAppendArbiterUnit(route));
 
-			// Set the unit
-			setValue((prev) => CS.getUnit(route));
-
 			// Update data
 			await CS.getUnit(route).updateData();
+			console.log(`Updated ${route} data.`);
+
+			// Set the unit
+			setValue((prev) => CS.getUnit(route));
 		})();
 	}, []);
 
