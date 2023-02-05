@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
+import useDevtoolsBackendUrl from "../hooks/data/static/useDevtoolsBackendUrl";
+
+import useArbiter from "../hooks/data/useArbiter";
 
 export default function Test() {
-	const [backendServer, setBackendServer] = useState();
+	const [backendServer, setBackendServer] = useDevtoolsBackendUrl();
+	const [usersList, setUsersList] = useArbiter("/repositories/usersList");
 
 	useEffect(() => {
-		const data = CS.find.unit("servers", ["devtoolsBackendServer"]);
-		console.log(`Data: `, data);
-		setBackendServer((prev) => data);
-	}, []);
+		if (backendServer) console.log(`Backend server url: `, backendServer);
+	}, [backendServer]);
+
+	useEffect(() => {
+		if (usersList) console.log(`Users list: `, usersList);
+	}, [usersList]);
 
 	return <div>Test</div>;
 }

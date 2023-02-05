@@ -11,7 +11,11 @@ import PythonArbiter from "../lib/data/PythonArbiter";
 
 // Add Comprehensive Storage to the global scope
 globalThis.CS = new ComprehensiveStorage(
-	new PythonArbiter("http://127.0.0.1:37000")
+	new PythonArbiter("http://127.0.0.1:37000"),
+	{
+		allowCollisions: false,
+		dontCreateUnitOnCollision: true,
+	}
 );
 
 // Append a unit

@@ -26,9 +26,8 @@ Made by @FelixRiddle
     - [X] Show app status.
     - [X] Make operations on the given app(like start, stop, etc.).
     - [X] Edit .env variables.
-  - [ ] Roamer(To update data values).
 
-### Setup[^setup]
+## Setup and run[^setup]
 
 Just run these two commands:
 
@@ -37,18 +36,12 @@ npm i
 npm run dev
 ```
 
-#### How to configure a repository/app to be used with dev-gui and dev-gui-website?
+## App settings[^settings.json]
 
-1. Step one create settings.json
-
-Notes:
-.gitignore:
-
-#### Settings.json
-
-For how to configure settings.json on repositories check the file, [settings.json.default.js](settings.json.default.js)
+For how to configure settings.json on repositories check the file, settings.json.spec.js on\
+dev-tools-standards repository.
 
 [^top]: Back to top
 [^setup]:
-    Go back to
-    setup
+    Go back to setup
+[^settings.json] settings.json
