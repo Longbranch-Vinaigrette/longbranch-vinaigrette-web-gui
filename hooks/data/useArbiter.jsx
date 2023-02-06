@@ -16,7 +16,10 @@ import { useEffect, useState } from "react";
 export default function useArbiter(
 	route,
 	alias = undefined,
-	dataDependencies = []
+	dataDependencies = [],
+	options = {
+		createOnlyIfThereAreDependencies: false,
+	}
 ) {
 	const [value, setValue] = useState();
 
@@ -26,14 +29,28 @@ export default function useArbiter(
 
 	// Create unit
 	useEffect(() => {
-		// Check if the unit exists, if it doesn't create it.
-		// If the left one is null, it will return the second one
-		CS.getUnit(route) ?? CS.createAndAppendArbiterUnit(route, alias);
+		if (
+			options &&
+			options.createOnlyIfThereAreDependencies &&
+			dataDependencies.length > 0
+		) {
+			// Check if the unit exists, if it doesn't create it.
+			// If the left one is null, it will return the second one
+			CS.getUnit(route) ?? CS.createAndAppendArbiterUnit(route, alias);
+		} else if (options && !options.createOnlyIfThereAreDependencies) {
+			// Check if the unit exists, if it doesn't create it.
+			// If the left one is null, it will return the second one
+			CS.getUnit(route) ?? CS.createAndAppendArbiterUnit(route, alias);
+		}
 	}, []);
 
 	// Update the data
 	useEffect(() => {
 		(async () => {
+			if (!CS.getUnit(route)) {
+				return;
+			}
+
 			// Update data
 			await CS.getUnit(route).updateData(dataDependencies);
 
