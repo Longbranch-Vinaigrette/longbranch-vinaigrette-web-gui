@@ -7,11 +7,9 @@ export default function useArbiter(route, dependencies = []) {
 
 	// Create unit and retrieve data
 	useEffect(() => {
-		if (!usersList) return;
-
 		// Create arbiter unit
 		let unit = CS.getUnit(id);
-		unit ?? CS.createAndAppendArbiterUnit(felixRepositoriesRoute, id);
+		unit ?? CS.createAndAppendArbiterUnit(route, id);
 
 		(async () => {
 			unit = CS.getUnit(id);
