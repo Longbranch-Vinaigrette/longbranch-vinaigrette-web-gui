@@ -1,4 +1,6 @@
 import { useState } from "react";
+import useDevtoolsBackendUrl from "../../../hooks/data/static/useDevtoolsBackendUrl";
+import useArbiter from "../../../hooks/data/useArbiter";
 import Configuration from "./Configuration/Configuration";
 
 export default function Element({
@@ -13,6 +15,8 @@ export default function Element({
 	const rowId = `repository/${repository["user"]}/${repository["name"]}`;
 	const { updateRepository } = fancyUserRepositorySettings;
 
+	const [backendUrl] = useDevtoolsBackendUrl();
+
 	// Functions
 	const handleStartOnBootClick = async (event) => {
 		// Update value
@@ -22,7 +26,7 @@ export default function Element({
 
 		// Post data
 		const result = await fetch(
-			"http://127.0.0.1:37000/app/enableOrDisableStartOnBoot/",
+			`${backendUrl}/app/enableOrDisableStartOnBoot/`,
 			{
 				method: "POST",
 				headers: {
@@ -49,7 +53,6 @@ export default function Element({
 				console.log(err);
 				return err;
 			});
-		console.log(`Start on boot response: `, result);
 	};
 
 	const handleConfigurationButtonClick = (event) => {
@@ -60,7 +63,7 @@ export default function Element({
 	const handleCheckDevToolsCompatibility = async (event) => {
 		// Post data
 		const result = await fetch(
-			"http://127.0.0.1:37000/app/checkDevToolsCompatibility/",
+			`${backendUrl}/app/checkDevToolsCompatibility/`,
 			{
 				method: "POST",
 				headers: {

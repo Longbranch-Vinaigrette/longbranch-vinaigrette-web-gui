@@ -11,8 +11,11 @@ export default function useArbiter(route, dependencies = []) {
 		let unit = CS.getUnit(id);
 		unit ?? CS.createAndAppendArbiterUnit(route, id);
 
+		// Get its data
+		CS.getUnit(id) && setData((prev) => CS.getUnit(id).getData());
+
 		(async () => {
-			unit = CS.getUnit(id);
+			let unit = CS.getUnit(id);
 			// If there's no unit, return
 			if (!unit) return;
 
