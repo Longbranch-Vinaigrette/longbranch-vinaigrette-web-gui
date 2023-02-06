@@ -4,27 +4,35 @@ import useArbiter from "../../../../hooks/data/useArbiter";
 const felixRepositoriesRoute = "/repositories/user/getRepositorySettings";
 export default function getUserRepositories() {
 	const [usersList, setUsersList] = useArbiter("/repositories/usersList");
-	const [felixRepositories, setFelixRepositories] = useState();
-
-	useEffect(() => {
-		console.log(`Felix repositories: `.felixRepositories);
-	}, [felixRepositories]);
+	const [felixUnit, setFelixUnit] = useState();
 
 	useEffect(() => {
 		if (!usersList) return;
 
-		(async () => {
-			if (!CS.getUnit(felixRepositoriesRoute)) return;
-			
-			// Create arbiter unit
+		// if (!CS.getUnit(felixRepositoriesRoute)) return;
+		const unit = CS.getUnit(felixRepositoriesRoute);
+
+		// Create arbiter unit
+		unit ??
 			CS.createAndAppendArbiterUnit(
 				felixRepositoriesRoute,
 				`${felixRepositoriesRoute}:${usersList[0]}`
 			);
 
-			// Get data
-			await CS.getUnit(felixRepositoriesRoute).updateData([usersList[0]]);
-		})();
+		// Set unit
+		setFelixUnit((prev) => CS.getUnit(felixRepositoriesRoute));
 	}, [usersList]);
+
+	useEffect(() => {
+		if (!felixUnit) return;
+
+		(async () => {
+			// Get data
+			console.log(`Fetching repositories...`);
+
+			await felixUnit.updateData([usersList[0]]);
+			console.log(`Repositories: `, CS.getUnit(felixRepositoriesRoute).data);
+		})();
+	}, [felixUnit]);
 	return <div></div>;
 }
