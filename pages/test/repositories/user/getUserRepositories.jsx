@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useArbiter from "../../../../hooks/data/useArbiter";
 
 export default function getUserRepositories() {
-	const [usersList, usersListId] = useArbiter("/repositories/usersList");
-	const [userRepositories, userRepositoriesId] = useArbiter(
+	const { data: usersList } = useArbiter("/repositories/usersList");
+	const { data: userRepositories } = useArbiter(
 		"/repositories/user/getRepositorySettings",
 		// Give the first user as a dependency, if not found give undefined
 		[(usersList && usersList[0]) || undefined]

@@ -24,5 +24,8 @@ export default function useArbiter(route, dependencies = []) {
 		})();
 	}, dependencies);
 
-	return [data, id];
+	return {
+		id,
+		data,
+	};
 }
