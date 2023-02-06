@@ -35,7 +35,7 @@ export default function useArbiter(
 	useEffect(() => {
 		(async () => {
 			// Update data
-			await CS.getUnit(route).updateData();
+			await CS.getUnit(route).updateData(dataDependencies);
 
 			// Set the unit
 			setValue((prev) => CS.getUnit(route).data);
@@ -46,7 +46,7 @@ export default function useArbiter(
 	 *
 	 */
 	const updateData = async () => {
-		await CS.getUnit(route).updateData();
+		await CS.getUnit(route).updateData(dataDependencies);
 	};
 
 	return [value, updateData];

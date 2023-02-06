@@ -6,7 +6,9 @@ export default function getUserRepositories() {
 	const [userRepositories] = useArbiter(
 		"/repositories/user/getRepositorySettings",
 		// Alias
-		`/repositories/user/getRepositorySettings:`
+		`/repositories/user/getRepositorySettings:${usersList[0]}`,
+		// Data dependencies
+		usersList
 	);
 
 	useEffect(() => {
