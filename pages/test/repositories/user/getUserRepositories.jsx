@@ -3,7 +3,7 @@ import useArbiter from "../../../../hooks/data/useArbiter";
 
 const felixRepositoriesRoute = "/repositories/user/getRepositorySettings";
 export default function getUserRepositories() {
-	const [usersList, setUsersList] = useArbiter("/repositories/getUsersList");
+	const [usersList, setUsersList] = useArbiter("/repositories/usersList");
 	const [felixRepositories, setFelixRepositories] = useState();
 
 	useEffect(() => {
