@@ -34,7 +34,7 @@ export default function getUserRepositories() {
 			// Get data
 			console.log(`Fetching repositories...`);
 
-			await felixUnit.updateData([usersList[0]]);
+			await felixUnit.updateData([usersList[0]], true);
 			console.log(
 				`Repositories: `,
 				CS.getUnit(`${felixRepositoriesRoute}:${usersList[0]}`).data
