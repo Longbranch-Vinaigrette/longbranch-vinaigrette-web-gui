@@ -14,12 +14,13 @@ export default function getUserRepositories() {
 		if (!usersList) return;
 
 		(async () => {
+			if (!CS.getUnit(felixRepositoriesRoute)) return;
+			
 			// Create arbiter unit
-			CS.getUnit(felixRepositoriesRoute) ??
-				CS.createAndAppendArbiterUnit(
-					felixRepositoriesRoute,
-					`${felixRepositoriesRoute}:${usersList[0]}`
-				);
+			CS.createAndAppendArbiterUnit(
+				felixRepositoriesRoute,
+				`${felixRepositoriesRoute}:${usersList[0]}`
+			);
 
 			// Get data
 			await CS.getUnit(felixRepositoriesRoute).updateData([usersList[0]]);
