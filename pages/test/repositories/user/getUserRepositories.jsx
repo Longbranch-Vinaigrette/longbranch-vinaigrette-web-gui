@@ -20,10 +20,14 @@ export default function getUserRepositories() {
 			);
 
 		// Set unit
-		setFelixUnit((prev) => CS.getUnit(felixRepositoriesRoute));
+		CS.getUnit(`${felixRepositoriesRoute}:${usersList[0]}`) &&
+			setFelixUnit((prev) =>
+				CS.getUnit(`${felixRepositoriesRoute}:${usersList[0]}`)
+			);
 	}, [usersList]);
 
 	useEffect(() => {
+		console.log(`Felix unit: `, felixUnit);
 		if (!felixUnit) return;
 
 		(async () => {
@@ -31,7 +35,10 @@ export default function getUserRepositories() {
 			console.log(`Fetching repositories...`);
 
 			await felixUnit.updateData([usersList[0]]);
-			console.log(`Repositories: `, CS.getUnit(felixRepositoriesRoute).data);
+			console.log(
+				`Repositories: `,
+				CS.getUnit(`${felixRepositoriesRoute}:${usersList[0]}`).data
+			);
 		})();
 	}, [felixUnit]);
 	return <div></div>;
