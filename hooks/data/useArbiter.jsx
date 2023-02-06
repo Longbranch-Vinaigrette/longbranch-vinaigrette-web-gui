@@ -1,70 +1,30 @@
 import { useEffect, useState } from "react";
+import { v4 } from "uuid";
 
-/**Use an arbiter unit
- *
- * Creates an arbiter unit at the given route if it doesn't exist.
- * If there's already a unit on the same route or alias,
- * it will return that arbiter unit.
- *
- * @param {string} route The route to fetch the data from(which should be the arbiter code).
- * @param {alias} alias The alias of the data, this is where the unit will be located and
- * 			how the unit is identified
- * @param {Array} dataDependencies An array of data dependencies, when an item changes,
- * 			the data will be updated.
- * @returns {Array} The result and a function to update data.
- */
-export default function useArbiter(
-	route,
-	alias = undefined,
-	dataDependencies = [],
-	options = {
-		createOnlyIfThereAreDependencies: false,
-	}
-) {
-	const [value, setValue] = useState();
+export default function useArbiter(route, dependencies = []) {
+	const [id, setId] = useState(`${route}:${v4()}`);
+	const [data, setData] = useState();
 
-	// Check if it's an array
-	if (!(typeof dataDependencies === typeof []))
-		throw new Error("Error: Data dependencies must be an array");
-
-	// Create unit
+	// Create unit and retrieve data
 	useEffect(() => {
-		if (
-			options &&
-			options.createOnlyIfThereAreDependencies &&
-			dataDependencies.length > 0
-		) {
-			// Check if the unit exists, if it doesn't create it.
-			// If the left one is null, it will return the second one
-			CS.getUnit(route) ?? CS.createAndAppendArbiterUnit(route, alias);
-		} else if (options && !options.createOnlyIfThereAreDependencies) {
-			// Check if the unit exists, if it doesn't create it.
-			// If the left one is null, it will return the second one
-			CS.getUnit(route) ?? CS.createAndAppendArbiterUnit(route, alias);
-		}
-	}, []);
+		if (!usersList) return;
 
-	// Update the data
-	useEffect(() => {
+		// Create arbiter unit
+		let unit = CS.getUnit(id);
+		unit ?? CS.createAndAppendArbiterUnit(felixRepositoriesRoute, id);
+
 		(async () => {
-			if (!CS.getUnit(route)) {
-				return;
-			}
+			unit = CS.getUnit(id);
+			// If there's no unit, return
+			if (!unit) return;
 
 			// Update data
-			await CS.getUnit(route).updateData(dataDependencies);
+			await unit.updateData(dependencies);
 
-			// Set the unit
-			setValue((prev) => CS.getUnit(route).data);
+			// Get data
+			setData((prev) => unit.getData());
 		})();
-	}, dataDependencies);
+	}, dependencies);
 
-	/**Update unit data
-	 *
-	 */
-	const updateData = async () => {
-		await CS.getUnit(route).updateData(dataDependencies);
-	};
-
-	return [value, updateData];
+	return [data, id];
 }

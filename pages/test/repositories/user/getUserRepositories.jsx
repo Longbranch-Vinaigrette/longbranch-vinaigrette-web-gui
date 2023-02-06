@@ -1,45 +1,21 @@
 import { useEffect, useState } from "react";
 import useArbiter from "../../../../hooks/data/useArbiter";
 
-const felixRepositoriesRoute = "/repositories/user/getRepositorySettings";
 export default function getUserRepositories() {
-	const [usersList, setUsersList] = useArbiter("/repositories/usersList");
-	const [felixUnit, setFelixUnit] = useState();
+	const [usersList, usersListId] = useArbiter("/repositories/usersList");
+	const [userRepositories, userRepositoriesId] = useArbiter(
+		"/repositories/user/getRepositorySettings",
+		// Give the first user as a dependency, if not found give undefined
+		[(usersList && usersList[0]) || undefined]
+	);
 
 	useEffect(() => {
-		if (!usersList) return;
-
-		// if (!CS.getUnit(felixRepositoriesRoute)) return;
-		const unit = CS.getUnit(felixRepositoriesRoute);
-
-		// Create arbiter unit
-		unit ??
-			CS.createAndAppendArbiterUnit(
-				felixRepositoriesRoute,
-				`${felixRepositoriesRoute}:${usersList[0]}`
-			);
-
-		// Set unit
-		CS.getUnit(`${felixRepositoriesRoute}:${usersList[0]}`) &&
-			setFelixUnit((prev) =>
-				CS.getUnit(`${felixRepositoriesRoute}:${usersList[0]}`)
-			);
+		console.log(`Users list: `, usersList);
 	}, [usersList]);
 
 	useEffect(() => {
-		console.log(`Felix unit: `, felixUnit);
-		if (!felixUnit) return;
+		console.log(`User repositories: `, userRepositories);
+	}, [userRepositories]);
 
-		(async () => {
-			// Get data
-			console.log(`Fetching repositories...`);
-
-			await felixUnit.updateData([usersList[0]], true);
-			console.log(
-				`Repositories: `,
-				CS.getUnit(`${felixRepositoriesRoute}:${usersList[0]}`).data
-			);
-		})();
-	}, [felixUnit]);
 	return <div></div>;
 }
