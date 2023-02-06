@@ -1,0 +1,3 @@
+[submodule "ComprehensiveStorage"]
+	path = src/submodules/ComprehensiveStorage
+	url = git@github.com:Perseverancia-company/sub.js.ComprehensiveStorage.git
