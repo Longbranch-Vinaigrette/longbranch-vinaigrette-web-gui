@@ -39,7 +39,7 @@ export default function Repositories() {
 		);
 	};
 
-	// Check if at least one of the is devtools compatible
+	// Check if at least one of the repositories is devtools compatible
 	useEffect(() => {
 		// Validation
 		if (!userRepositories) {
@@ -57,7 +57,7 @@ export default function Repositories() {
 				break;
 			}
 		}
-	}, [selectedUser]);
+	}, [userRepositories, selectedUser]);
 
 	return (
 		<div>
