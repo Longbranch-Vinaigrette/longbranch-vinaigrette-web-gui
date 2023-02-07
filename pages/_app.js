@@ -47,7 +47,7 @@ export default function App({ Component, pageProps }) {
 	return (
 		<div>
 			<TopNavbar></TopNavbar>
-			<Navbar />
+			{/* <Navbar /> */}
 			<Head>
 				<title>Development Tools</title>
 			</Head>
