@@ -14,11 +14,10 @@ export default function Configuration({
 	setShowConfiguration,
 	...fancyUserRepositorySettings
 }) {
-	const [appSettings, setAppSettings] = useState({});
 	const [envVariablesConfig, setEnvVariablesConfig] = useState({});
 	const [selectedTab, setSelectedTab] = useState("information");
 
-	const [newAppSettings] = useAppSettings(
+	const { appInfo: appSettings } = useAppSettings(
 		(repository && repository["path"]) || undefined
 	);
 
@@ -40,46 +39,6 @@ export default function Configuration({
 	// Move element along the user
 	const configId = `${rowId}/config`;
 	useMoveElementOnScroll(configId);
-
-	// Fetch app settings
-	useEffect(() => {
-		(async () => {
-			const res = await fetch(`${backendUrl}/app/getSettings/`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: new Blob(
-					[
-						JSON.stringify({
-							path: repository["path"],
-						}),
-					],
-					{
-						type: "application/json",
-					}
-				),
-			})
-				.then((res) => {
-					return res.json();
-				})
-				.catch((err) => {
-					console.log(err);
-					return undefined;
-				});
-
-			if (res) {
-				// Set the data
-				setAppSettings((prev) => {
-					return {
-						...prev,
-						// The stuff is in data
-						...res["data"],
-					};
-				});
-			}
-		})();
-	}, []);
 
 	return (
 		<div className={styles.coverEverything} id={configId}>

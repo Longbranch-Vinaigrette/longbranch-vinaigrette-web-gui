@@ -23,5 +23,8 @@ export default function useAppSettings(path) {
 		})();
 	}, [path]);
 
-	return [appSettings];
+	return {
+		appSettings,
+		appInfo: appSettings && appSettings["devtools"],
+	};
 }
