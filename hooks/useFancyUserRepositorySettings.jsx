@@ -1,27 +1,12 @@
 import { useEffect, useState } from "react";
+import useSelectedUser from "./user/useSelectedUser";
 
 export default function useFancyUserRepositorySettings() {
 	const [users, setUsers] = useState([]);
-	const [selectedUser, setSelectedUser] = useState("");
 	const [userRepositories, setUserRepositories] = useState({});
-
+	const [selectedUser, setSelectedUser] = useSelectedUser();
+	
 	const serverUrl = "http://localhost:37000";
-	const selectedUserKeyword = "fancyUserRepositorySettings/selectedUser";
-
-	// Load selected user locally
-	useEffect(() => {
-		const loadedSelectedUser = localStorage.getItem(selectedUserKeyword);
-		const isEmpty = !loadedSelectedUser;
-
-		if (!isEmpty) {
-			setSelectedUser(loadedSelectedUser);
-		}
-	}, []);
-
-	// Save selected user locally
-	useEffect(() => {
-		localStorage.setItem(selectedUserKeyword, selectedUser);
-	}, [selectedUser]);
 
 	// Update a repository
 	const updateRepository = (user, repositoryName, data) => {
