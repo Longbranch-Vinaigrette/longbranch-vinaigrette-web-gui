@@ -3,7 +3,6 @@ import useAppStatus from "../../../../hooks/apps/app/useAppStatus";
 
 import useMoveElementOnScroll from "../../../../hooks/css/positioning/useMoveElementOnScroll";
 import useDevtoolsBackendUrl from "../../../../hooks/data/static/useDevtoolsBackendUrl";
-import useAppSettings from "../../../../hooks/user/apps/app/settings/useAppSettings";
 import styles from "./Configuration.module.scss";
 import EnvVariables from "./EnvVariables/EnvVariables";
 import Operations from "./Operations/Operations";
@@ -12,14 +11,11 @@ export default function Configuration({
 	repository,
 	index,
 	setShowConfiguration,
+	appSettings,
 	...fancyUserRepositorySettings
 }) {
 	const [envVariablesConfig, setEnvVariablesConfig] = useState({});
 	const [selectedTab, setSelectedTab] = useState("information");
-
-	const { appInfo: appSettings } = useAppSettings(
-		(repository && repository["path"]) || undefined
-	);
 
 	const [backendUrl] = useDevtoolsBackendUrl();
 	const rowId = `repository/${repository["user"]}/${repository["name"]}`;

@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import useDevtoolsBackendUrl from "../../../hooks/data/static/useDevtoolsBackendUrl";
-import useArbiter from "../../../hooks/data/useArbiter";
+import useAppSettings from "../../../hooks/user/apps/app/settings/useAppSettings";
+import { sendRequest } from "../../../src/submodules/ComprehensiveStorage/requests/requests";
 import Configuration from "./Configuration/Configuration";
 
 export default function Element({
@@ -16,6 +18,17 @@ export default function Element({
 	const { updateRepository } = fancyUserRepositorySettings;
 
 	const [backendUrl] = useDevtoolsBackendUrl();
+	const { appInfo: appSettings } = useAppSettings(
+		(repository && repository["path"]) || undefined
+	);
+
+	// Check if it's devtools compatible
+	useEffect(() => {
+		if (!appSettings) return;
+		updateRepository(repository["user"], repository["name"], {
+			dev_tools: true,
+		});
+	}, [appSettings]);
 
 	// Functions
 	const handleStartOnBootClick = async (event) => {
@@ -54,48 +67,10 @@ export default function Element({
 				return err;
 			});
 	};
-
+	
+	// When the user clicks on configuration
 	const handleConfigurationButtonClick = (event) => {
 		setShowConfiguration((prev) => !prev);
-	};
-
-	// Check whether the app is DevTools compatible or not
-	const handleCheckDevToolsCompatibility = async (event) => {
-		// Post data
-		const result = await fetch(
-			`${backendUrl}/app/checkDevToolsCompatibility/`,
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: new Blob(
-					[
-						JSON.stringify({
-							path: repository["path"],
-						}),
-					],
-					{
-						type: "application/json",
-					}
-				),
-			}
-		)
-			.then((res) => {
-				const data = res.json();
-				return data;
-			})
-			.catch((err) => {
-				console.log(err);
-				return err;
-			});
-
-		// Update repository
-		console.log(`Check DevTools compatibility response: `, result);
-		console.log(`Data: `, result["devtoolsCompatible"]);
-		updateRepository(repository["user"], repository["name"], {
-			dev_tools: result["devtoolsCompatible"],
-		});
 	};
 
 	return (
@@ -118,12 +93,6 @@ export default function Element({
 				)) || (
 					<div className="danger">
 						No
-						<button
-							type="button"
-							onClick={(event) => handleCheckDevToolsCompatibility(event)}
-						>
-							Check
-						</button>
 					</div>
 				)}
 			</td>
@@ -141,6 +110,7 @@ export default function Element({
 					repository={repository}
 					index={index}
 					setShowConfiguration={setShowConfiguration}
+					appSettings={appSettings}
 					// Fancy user repository settings
 					{...fancyUserRepositorySettings}
 				/>
