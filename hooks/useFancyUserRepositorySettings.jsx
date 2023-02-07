@@ -56,14 +56,6 @@ export default function useFancyUserRepositorySettings() {
 
 			if (res) {
 				setUsers(res["users"]);
-
-				// An alias for me to understand
-				const isUserEmpty = !selectedUser;
-				
-				// Only if the user is empty shall we select a user for the user
-				if (isUserEmpty) {
-					setSelectedUser(res["users"][0]);
-				}
 			}
 		})();
 	}, []);
