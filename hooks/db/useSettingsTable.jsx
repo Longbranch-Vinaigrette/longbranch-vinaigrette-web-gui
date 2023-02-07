@@ -23,12 +23,11 @@ export default function useSettingsTable() {
 	};
 
 	// Get data
-	const get = (key) => {
+	const get = async (key) => {
 		const unit = CS.getUnit(getRoute);
-		unit.dispatch({
+		return await unit.dispatch({
 			key,
 		});
-		return unit.getData();
 	};
 
 	return {
