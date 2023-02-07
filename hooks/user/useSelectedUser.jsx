@@ -13,7 +13,6 @@ export default function useSelectedUser() {
 			// Prefer the database over local storage, because nextjs resets local storage
 			// every time.
 			const actualSelectedUser = await getSetting(selectedUserKeyword);
-			console.log(`Got selected user: `, actualSelectedUser);
 			if (actualSelectedUser) {
 				// Set its value
 				setSelectedUser(actualSelectedUser["value"]);

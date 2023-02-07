@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
+import useDevtoolsBackendUrl from "./data/static/useDevtoolsBackendUrl";
 import useSelectedUser from "./user/useSelectedUser";
+import useUsersList from "./user/useUsersList";
 
 export default function useFancyUserRepositorySettings() {
 	const [users, setUsers] = useState([]);
 	const [userRepositories, setUserRepositories] = useState({});
 	const [selectedUser, setSelectedUser] = useSelectedUser();
-	
-	const serverUrl = "http://localhost:37000";
+
+	const [usersList] = useUsersList();
+	const [serverUrl] = useDevtoolsBackendUrl();
 
 	// Update a repository
 	const updateRepository = (user, repositoryName, data) => {
-		// console.log(`User: `, user);
-		// console.log(`Repository name: `, repositoryName);
-		// console.log(`Updating repository with the values: `, data);
 		setUserRepositories((prev) => {
 			const result = prev[user].map((refRepository, index) => {
 				// This is the one we are looking for
@@ -40,33 +40,16 @@ export default function useFancyUserRepositorySettings() {
 		});
 	};
 
-	// Get local users
-	useEffect(() => {
-		(async () => {
-			const res = await fetch(`${serverUrl}/user/getLocalUsers/`, {
-				method: "GET",
-			})
-				.then((res) => {
-					return res.json();
-				})
-				.catch((err) => {
-					// Remember that netowork errors are usually a cors problem
-					console.log("Error: ", err)
-				});
-
-			if (res) {
-				setUsers(res["users"]);
-			}
-		})();
-	}, []);
-
 	// After we get the local users, we can retrieve the repositories for each user,
 	// the question is how?.
 	useEffect(() => {
+		// Check if the users exist
+		if (!usersList) return;
+
 		// Fetch every user repository
 		(async () => {
 			// Iterate over the usernames
-			users.map(async (user, index) => {
+			usersList.map(async (user, index) => {
 				// Fetch user apps/repositories
 				const res = await fetch(`${serverUrl}/user/apps/getUserApps/`, {
 					method: "POST",
@@ -91,10 +74,10 @@ export default function useFancyUserRepositorySettings() {
 				}
 			});
 		})();
-	}, [users]);
+	}, [usersList]);
 
 	return {
-		users,
+		users: usersList,
 		selectedUser,
 		setSelectedUser,
 		userRepositories,
