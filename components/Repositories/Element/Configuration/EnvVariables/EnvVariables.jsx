@@ -59,8 +59,7 @@ export default function EnvVariables({ repository, appSettings, ...args }) {
 					return res.json();
 				})
 				.catch((err) => console.log(err));
-
-			console.log(`Response: `, res);
+			
 			if (res) {
 				setEnvVariablesConfig((prev) => {
 					return {

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import useAppStatus from "../../../../hooks/apps/app/useAppStatus";
 
 import useMoveElementOnScroll from "../../../../hooks/css/positioning/useMoveElementOnScroll";
+import useDevtoolsBackendUrl from "../../../../hooks/data/static/useDevtoolsBackendUrl";
+import useAppSettings from "../../../../hooks/user/apps/app/settings/useAppSettings";
 import styles from "./Configuration.module.scss";
 import EnvVariables from "./EnvVariables/EnvVariables";
 import Operations from "./Operations/Operations";
@@ -16,7 +18,11 @@ export default function Configuration({
 	const [envVariablesConfig, setEnvVariablesConfig] = useState({});
 	const [selectedTab, setSelectedTab] = useState("information");
 
-	const backendUrl = "http://localhost:37000";
+	const [newAppSettings] = useAppSettings(
+		(repository && repository["path"]) || undefined
+	);
+
+	const [backendUrl] = useDevtoolsBackendUrl();
 	const rowId = `repository/${repository["user"]}/${repository["name"]}`;
 	// Hook to check app status
 	const { appStatus, updateAppStatus } = useAppStatus({
