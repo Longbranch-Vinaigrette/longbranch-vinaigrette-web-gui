@@ -67,7 +67,7 @@ export default function Element({
 				return err;
 			});
 	};
-	
+
 	// When the user clicks on configuration
 	const handleConfigurationButtonClick = (event) => {
 		setShowConfiguration((prev) => !prev);
@@ -91,7 +91,7 @@ export default function Element({
 						Yes
 					</div>
 				)) || (
-					<div className="danger">
+					<div className="danger" style={{ padding: "7px" }}>
 						No
 					</div>
 				)}
